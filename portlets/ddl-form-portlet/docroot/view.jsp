@@ -46,6 +46,10 @@ try {
 			<aui:form action="<%= saveDataURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm">
 				<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 				<aui:input name="recordSetId" type="hidden" value="<%= recordSet.getRecordSetId() %>" />
+
+				<aui:input name="defaultLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
+ 				<aui:input name="languageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
+
 				<aui:input name="multipleSubmissions" type="hidden" value="<%= multipleSubmissions %>" />
 				<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 

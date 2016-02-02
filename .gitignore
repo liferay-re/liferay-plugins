@@ -48,3 +48,27 @@ _sass_cache_*.css
 
 /tools/*/*/*/lib
 /tools/node*
+portlets/contacts-portlet/docroot/WEB-INF/lib/so-portlet-service.jar
+portlets/so-portlet/docroot/WEB-INF/lib/contacts-shared.jar
+portlets/so-portlet/docroot/WEB-INF/lib/microblogs-shared.jar
+portlets/so-portlet/docroot/WEB-INF/lib/notifications-shared.jar
+portlets/so-portlet/docroot/WEB-INF/lib/private-messaging-shared.jar
+portlets/so-portlet/docroot/WEB-INF/lib/so-configurations-shared.jar
+shared/deploy-listener-shared/lib/portal-compat-shared.jar
+shared/ip-geocoder-shared/lib/portal-compat-shared.jar
+shared/notifications-shared/lib/contacts-shared.jar
+shared/notifications-shared/lib/microblogs-shared.jar
+shared/notifications-shared/lib/private-messaging-shared.jar
+shared/notifications-shared/lib/so-announcements-shared.jar
+shared/notifications-shared/lib/so-configurations-shared.jar
+shared/notifications-shared/lib/so-shared.jar
+shared/so-shared/lib/so-configurations-shared.jar
+hooks/vk-autologin-hook/.classpath
+hooks/vk-autologin-hook/.project
+hooks/vk-autologin-hook/.settings/.jsdtscope
+hooks/vk-autologin-hook/.settings/org.eclipse.jdt.core.prefs
+hooks/vk-autologin-hook/.settings/org.eclipse.wst.common.component
+hooks/vk-autologin-hook/.settings/org.eclipse.wst.common.project.facet.core.prefs.xml
+hooks/vk-autologin-hook/.settings/org.eclipse.wst.common.project.facet.core.xml
+hooks/vk-autologin-hook/.settings/org.eclipse.wst.jsdt.ui.superType.container
+hooks/vk-autologin-hook/.settings/org.eclipse.wst.jsdt.ui.superType.name

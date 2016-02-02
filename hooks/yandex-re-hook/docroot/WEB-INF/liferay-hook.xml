@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hook PUBLIC "-//Liferay//DTD Hook 6.2.0//EN" "http://www.liferay.com/dtd/liferay-hook_6_2_0.dtd">
+
+<hook>
+	<language-properties>content/Language_ru.properties</language-properties>
+	<language-properties>content/Language_en.properties</language-properties>
+	<custom-jsp-dir>/jsp-hook</custom-jsp-dir>
+	
+	<struts-action>
+	    <struts-action-path>/admin_server/edit_site</struts-action-path>
+	    <struts-action-impl>
+	    ru.liferay.hook.action.CustomEditGroupAction
+	    </struts-action-impl>
+	</struts-action>
+	<struts-action>
+	    <struts-action-path>/sites_admin/edit_site</struts-action-path>
+	    <struts-action-impl>
+	    ru.liferay.hook.action.CustomEditGroupAction
+	    </struts-action-impl>
+	</struts-action>
+</hook>
