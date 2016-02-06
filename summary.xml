@@ -783,7 +783,7 @@
 		<type><![CDATA[portlet]]></type>
 		<tags><![CDATA[chat, friends, im, social]]></tags>
 		<short-description><![CDATA[]]></short-description>
-		<long-description><![CDATA[Liferay's Chat portlet provides a convenient way of allowing users to send each other instant messages when they are logged into a Liferay site. It appears as at the bottom of every page, and displays who is logged on, their statuses, and any chats the logged-in user has open. Users can also set audio alerts, and engage in multiple chats. Consult the â€œChatâ€ section of the Liferay User Guide for details on administering this service. The Liferay User Guide can be found at http://liferay.com/documentation.<br /><br />This app may appear at the bottom of the page.]]></long-description>
+		<long-description><![CDATA[Liferay's Chat portlet provides a convenient way of allowing users to send each other instant messages when they are logged into a Liferay site. It appears as at the bottom of every page, and displays who is logged on, their statuses, and any chats the logged-in user has open. Users can also set audio alerts, and engage in multiple chats. Consult the â€šÃ„ÃºChatâ€šÃ„Ã¹ section of the Liferay User Guide for details on administering this service. The Liferay User Guide can be found at http://liferay.com/documentation.<br /><br />This app may appear at the bottom of the page.]]></long-description>
 		<change-log><![CDATA[]]></change-log>
 		<page-url><![CDATA[http://www.liferay.com]]></page-url>
 		<author><![CDATA[Liferay, Inc.]]></author>
@@ -3643,83 +3643,7 @@
 		<type><![CDATA[hook]]></type>
 		<tags><![CDATA[vk, social]]></tags>
 		<short-description><![CDATA[]]></short-description>
-		<long-description><![CDATA[Èíòåãðàöèÿ ñ ñîöèàëüíîé ñåòüþ VK.com]]></long-description>
-		<change-log><![CDATA[]]></change-log>
-		<page-url><![CDATA[http://www.liferay.ru]]></page-url>
-		<author><![CDATA[Liferay RU]]></author>
-		<licenses><![CDATA[LGPL]]></licenses>
-		<liferay-versions><![CDATA[6.2.0+]]></liferay-versions>
-		<releng>
-			<bundle><![CDATA[true]]></bundle>
-			<category><![CDATA[Security]]></category>
-			<demo-url><![CDATA[]]></demo-url>
-			<dependent-apps><![CDATA[]]></dependent-apps>
-			<labs><![CDATA[false]]></labs>
-			<marketplace><![CDATA[false]]></marketplace>
-			<public><![CDATA[true]]></public>
-			<support-url><![CDATA[]]></support-url>
-			<supported><![CDATA[false]]></supported>
-		</releng>
-	</plugin>
-
-	<plugin>
-		<artifact-id><![CDATA[yandex-re-hook]]></artifact-id>
-		<name><![CDATA[Yandex]]></name>
-		<type><![CDATA[hook]]></type>
-		<tags><![CDATA[yandex]]></tags>
-		<short-description><![CDATA[]]></short-description>
-		<long-description><![CDATA[Èíòåãðàöèÿ ñ Yandex Metrika è Yandex WebMaster]]></long-description>
-		<change-log><![CDATA[]]></change-log>
-		<page-url><![CDATA[http://www.liferay.ru]]></page-url>
-		<author><![CDATA[Liferay RU]]></author>
-		<licenses><![CDATA[LGPL]]></licenses>
-		<liferay-versions><![CDATA[6.2.0+]]></liferay-versions>
-		<releng>
-			<bundle><![CDATA[true]]></bundle>
-			<category><![CDATA[Productivity]]></category>
-			<demo-url><![CDATA[]]></demo-url>
-			<dependent-apps><![CDATA[]]></dependent-apps>
-			<labs><![CDATA[false]]></labs>
-			<marketplace><![CDATA[false]]></marketplace>
-			<public><![CDATA[true]]></public>
-			<support-url><![CDATA[]]></support-url>
-			<supported><![CDATA[false]]></supported>
-		</releng>
-	</plugin>
-	
-	<plugin>
-		<artifact-id><![CDATA[social-bookmarks-re-hook]]></artifact-id>
-		<name><![CDATA[Social Bookmarks]]></name>
-		<type><![CDATA[hook]]></type>
-		<tags><![CDATA[yandex]]></tags>
-		<short-description><![CDATA[]]></short-description>
-		<long-description><![CDATA[Ñîöèàëüíûé çàêëàäêè äëÿ Ðîññèéñêèõ Ñîö. Ñåòåé]]></long-description>
-		<change-log><![CDATA[]]></change-log>
-		<page-url><![CDATA[http://www.liferay.ru]]></page-url>
-		<author><![CDATA[Liferay RU]]></author>
-		<licenses><![CDATA[LGPL]]></licenses>
-		<liferay-versions><![CDATA[6.2.0+]]></liferay-versions>
-		<releng>
-			<bundle><![CDATA[true]]></bundle>
-			<category><![CDATA[Productivity]]></category>
-			<demo-url><![CDATA[]]></demo-url>
-			<dependent-apps><![CDATA[]]></dependent-apps>
-			<labs><![CDATA[false]]></labs>
-			<marketplace><![CDATA[false]]></marketplace>
-			<public><![CDATA[true]]></public>
-			<support-url><![CDATA[]]></support-url>
-			<supported><![CDATA[false]]></supported>
-		</releng>
-	</plugin>
-	
-	<!-- LIFERAY-RE Plugins -->
-	<plugin>
-		<artifact-id><![CDATA[vk-autologin-hook]]></artifact-id>
-		<name><![CDATA[VK]]></name>
-		<type><![CDATA[hook]]></type>
-		<tags><![CDATA[vk, social]]></tags>
-		<short-description><![CDATA[]]></short-description>
-		<long-description><![CDATA[Ð˜Ð½Ñ‚ÐµÐ³Ñ€Ð°Ñ†Ð¸Ñ Ñ ÑÐ¾Ñ†Ð¸Ð°Ð»ÑŒÐ½Ð¾Ð¹ ÑÐµÑ‚ÑŒÑŽ VK.com]]></long-description>
+		<long-description><![CDATA[Ð˜Ð½Ñ‚ÐµÐ³Ñ€Ð°Ñ†Ð¸Ñ Ñ VK.com]]></long-description>
 		<change-log><![CDATA[]]></change-log>
 		<page-url><![CDATA[http://www.liferay.ru]]></page-url>
 		<author><![CDATA[Liferay RU]]></author>
@@ -3769,7 +3693,7 @@
 		<type><![CDATA[hook]]></type>
 		<tags><![CDATA[yandex]]></tags>
 		<short-description><![CDATA[]]></short-description>
-		<long-description><![CDATA[Ð¡Ð¾Ñ†Ð¸Ð°Ð»ÑŒÐ½Ñ‹Ð¹ Ð·Ð°ÐºÐ»Ð°Ð´ÐºÐ¸ Ð´Ð»Ñ Ð Ð¾ÑÑÐ¸Ð¹ÑÐºÐ¸Ñ… Ð¡Ð¾Ñ†. Ð¡ÐµÑ‚ÐµÐ¹]]></long-description>
+		<long-description><![CDATA[Ð¡Ð¾Ñ†Ð¸Ð°Ð»ÑŒÐ½Ñ‹Ðµ ÑÑÑ‹Ð»ÐºÐ¸]]></long-description>
 		<change-log><![CDATA[]]></change-log>
 		<page-url><![CDATA[http://www.liferay.ru]]></page-url>
 		<author><![CDATA[Liferay RU]]></author>
@@ -3787,7 +3711,7 @@
 			<supported><![CDATA[false]]></supported>
 		</releng>
 	</plugin>
-
+	
 	<author>${Bundle-Vendor}</author>
 	<author>Liferay, Inc.</author>
 	<author>SpringSource, Inc.</author>
