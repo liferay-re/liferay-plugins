@@ -1,14 +1,3 @@
-<%--
-All information available here: https://vk.com/dev
-Information about authorization: https://vk.com/dev/auth_mobile
-Here https://vk.com/dev you could choose Create application of Web-site type on the right hand.
-Put as:
-1. OAuth URL = https://oauth.vk.com/authorize
-2. Redirect URL = http://YOUR_HOST.YOUR_DOMAIN:YOUR_PORT/c/login/vk_connect_oauth
-3. OAuth token URL = https://oauth.vk.com/access_token
-4. URL to get users list = https://api.vk.com/method/users.get
---%>
-
 <%@page import="com.liferay.portal.kernel.util.StringPool"%>
 <%@ include file="/html/portlet/portal_settings/init.jsp" %>
 
