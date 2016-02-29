@@ -24,7 +24,8 @@ public class CustomEditGroupAction extends BaseStrutsPortletAction {
 		
 		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 		if (liveGroupId <= 0) {
-			//just skip it
+			originalStrutsPortletAction.processAction(originalStrutsPortletAction, portletConfig, actionRequest,
+					actionResponse);
 			return;
 		}
 		Group liveGroup = GroupLocalServiceUtil.getGroup(liveGroupId);
