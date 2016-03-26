@@ -1,7 +1,145 @@
 <?xml version="1.0"?>
 
-<root available-locales="en_US" default-locale="en_US">
+<root available-locales="ru_RU,en_US" default-locale="ru_RU">
 	<dynamic-element name="content" type="text_area" index-type="keyword" index="0">
+		<dynamic-content language-id="ru_RU">
+			<![CDATA[
+				<style type="text/css">
+					h2.welcome-title {
+						font-size: 35px;
+						margin: 0 0 40px;
+					}
+
+					h4.subtitle {
+						font-size: 24px;
+						line-height: 30px;
+						margin-bottom: 0;
+					}
+
+					.welcome-content {
+						font-size: 15px;
+						margin: 0;
+					}
+
+					.welcome-content a {
+						text-decoration: none;
+					}
+
+					.welcome-content a:hover {
+						text-decoration: underline;
+					}
+
+					.welcome-content .welcome-text {
+						line-height: 22px;
+						margin: 0;
+					}
+
+					.welcome-content .pdf {
+						display: inline-block;
+						margin-top: 25px;
+					}
+
+					.welcome-content .welcome-icon {
+						float: left;
+						margin: 4px 0;
+						padding-right: 38px;
+					}
+
+					@media all and (max-width: 767px) {
+						h2.welcome-title {
+							font-size: 24px;
+						}
+
+						h4.subtitle {
+							margin: 32px 0 4px;
+						}
+
+						.welcome-content-wrapper {
+							text-align: center;
+						}
+
+						.welcome-content .welcome-icon {
+							float: none;
+							padding: 0;
+						}
+					}
+				</style>
+
+				<div class="welcome-content-wrapper">
+					<h2 class="welcome-title">
+						Добро пожаловать в портал Liferay!
+					</h2>
+
+					<div class="welcome-content">
+						<img class="welcome-icon" src="[$FILE=welcome_cube.png$]" />
+
+						<h4 class="subtitle">
+							Начать
+						</h4>
+
+						<p class="welcome-text">
+							Посмотрите наш <a href="http://www.liferay.com/welcome-start?v1.0" target="_blank">Руководство Быстрого Старта</a> для обзора основных особенностей Liferay.
+						</p>
+
+						<div class="helper-clearfix">&nbsp;</div>
+					</div>
+
+					<div class="welcome-content">
+						<img class="welcome-icon" src="[$FILE=welcome_learn.png$]" />
+
+						<h4 class="subtitle">
+							Изучить
+						</h4>
+
+						<p class="welcome-text">
+							Прочитайте официальное <a href="http://www.liferay.com/welcome-learn?v1.0" target="_blank">Руководство Пользователя Liferay</a> для детальной информации о том как установить и настроить портал Liferay.
+						</p>
+
+						<div class="helper-clearfix">&nbsp;</div>
+					</div>
+
+					<div class="welcome-content">
+						<img class="welcome-icon" src="[$FILE=welcome_community.png$]" />
+
+						<h4 class="subtitle">
+							Общаться
+						</h4>
+
+						<p class="welcome-text">
+							Посетите <a href="http://www.liferay.com/welcome-engage?v1.0" target="_blank">Сайт Сообщества Liferay</a> чтобы задать вопросы, найти ответы, обменяться информацией с другими пользователями.
+						</p>
+
+						<div class="helper-clearfix">&nbsp;</div>
+					</div>
+
+					<div class="welcome-content">
+						<img class="welcome-icon" src="[$FILE=welcome_tools.png$]" />
+
+						<h4 class="subtitle">
+							Разрабатывать
+						</h4>
+
+						<p class="welcome-text">
+							Посмотрите наши <a href="http://www.liferay.com/welcome-develop?v1.0" target="_blank">Ресурсы Разработчика</a> чтобы научиться разрабатывать приложения для Портала Liferay.
+						</p>
+
+						<div class="helper-clearfix">&nbsp;</div>
+					</div>
+
+					<div class="welcome-content">
+						<img class="welcome-icon" src="[$FILE=welcome_ee.png$]" />
+
+						<h4 class="subtitle">
+							Оценить
+						</h4>
+
+						<p class="welcome-text">
+							Узнайте больше о партнерам, поддержке, обучении и других <a href="http://www.liferay.com/welcome-evaluate?v1.0" target="_blank">опциях для продвинутых пользователей</a> доступных для Liferay.
+						</p>
+					</div>
+				</div>
+			]]>
+		</dynamic-content>
 		<dynamic-content language-id="en_US">
 			<![CDATA[
 				<style type="text/css">
