@@ -147,7 +147,7 @@ $theme.include($body_top_include)
 	<section>
 		<footer id="footer" role="contentinfo">
 			<p class="powered-by">
-				#language("powered-by") <a href="http://www.liferay.com" rel="external">Liferay</a>
+				#language("powered-by") <a href="http://www.liferay.ru" rel="external">Liferay RE</a>
 			</p>
 		</footer>
 	</section>
