@@ -43,8 +43,9 @@ AUI.add(
 		var STR_SPACE = ' ';
 
 		var TPL_ICON_ADD_EVENT_NODE = '<div class="btn-group">' +
-										'<button type="button" class="btn btn-primary calendar-add-event-btn">' +
-											Liferay.Language.get('add-calendar-booking') +
+										'<button type="button" class="btn btn-primary calendar-add-event-btn" label="' +
+										Liferay.Language.get('add-calendar-booking') + '">' +
+											Liferay.Language.get('add') +
 										'</div>' +
 									'</button>';
 
