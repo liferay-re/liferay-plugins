@@ -171,7 +171,7 @@ public class CalendarStagedModelDataHandler
 		Group scopeGroup = GroupLocalServiceUtil.getGroup(
 			portletDataContext.getScopeGroupId());
 
-		calendarNameMap.put(LocaleUtil.getDefault(), scopeGroup.getName());
+		calendarNameMap.put(LocaleUtil.getDefault(), scopeGroup.getDescriptiveName());
 
 		return calendarNameMap;
 	}

@@ -43,7 +43,7 @@
 	>
 		<liferay-ui:search-container-column-text
 			name="name"
-			value="<%= group.getName() %>"
+			value="<%= group.getDescriptiveName() %>"
 		/>
 
 		<liferay-ui:search-container-column-text
