@@ -70,11 +70,14 @@ import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.PortletURLFactoryUtil;
 
 import java.io.PrintWriter;
 import java.io.Serializable;
@@ -96,6 +99,7 @@ import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletContext;
+import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletResponse;
@@ -104,6 +108,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.WindowState;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -121,6 +126,59 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 
 	public static final String VIEW_PATH =
 		BaseAlloyControllerImpl.class.getName() + "#VIEW_PATH";
+
+	public static void setAuditedModel(
+			BaseModel<?> baseModel, Company company, User user)
+		throws Exception {
+
+		if (!(baseModel instanceof AuditedModel) || (company == null) ||
+			(user == null)) {
+
+			return;
+		}
+
+		AuditedModel auditedModel = (AuditedModel)baseModel;
+
+		if (baseModel.isNew()) {
+			auditedModel.setCompanyId(company.getCompanyId());
+			auditedModel.setUserId(user.getUserId());
+			auditedModel.setUserName(user.getFullName());
+			auditedModel.setCreateDate(new Date());
+			auditedModel.setModifiedDate(auditedModel.getCreateDate());
+		}
+		else {
+			auditedModel.setModifiedDate(new Date());
+		}
+	}
+
+	public static void setAuditedModel(
+			BaseModel<?> baseModel, HttpServletRequest request)
+		throws Exception {
+
+		if (!(baseModel instanceof AuditedModel) || (request == null)) {
+			return;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		setAuditedModel(
+			baseModel, themeDisplay.getCompany(), themeDisplay.getUser());
+	}
+
+	public static void setAuditedModel(BaseModel<?> baseModel, User user)
+		throws Exception {
+
+		if (!(baseModel instanceof AuditedModel) || (user == null)) {
+			return;
+		}
+
+		long companyId = CompanyLocalServiceUtil.getCompanyIdByUserId(
+			user.getUserId());
+
+		setAuditedModel(
+			baseModel, CompanyLocalServiceUtil.getCompany(companyId), user);
+	}
 
 	@Override
 	public void afterPropertiesSet() {
@@ -447,14 +505,21 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 			}
 		}
 		catch (Exception e) {
-			log.error(e, e);
-
 			String message = "an-unexpected-system-error-occurred";
 
 			Throwable rootCause = getRootCause(e);
 
 			if (rootCause instanceof AlloyException) {
+				AlloyException ae = (AlloyException)rootCause;
+
+				if (ae.log) {
+					log.error(rootCause, rootCause);
+				}
+
 				message = rootCause.getMessage();
+			}
+			else {
+				log.error(e, e);
 			}
 
 			renderError(HttpServletResponse.SC_BAD_REQUEST, e, message);
@@ -507,6 +572,70 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		}
 
 		return sb.toString();
+	}
+
+	protected PortletURL getPortletURL(
+			String controller, String action, PortletMode portletMode,
+			String lifecycle)
+		throws Exception {
+
+		return getPortletURL(
+			controller, action, portletMode, lifecycle,
+			portletRequest.getWindowState(), null);
+	}
+
+	protected PortletURL getPortletURL(
+			String controller, String action, PortletMode portletMode,
+			String lifecycle, Object... parameters)
+		throws Exception {
+
+		return getPortletURL(
+			controller, action, portletMode, lifecycle,
+			portletRequest.getWindowState(), parameters);
+	}
+
+	protected PortletURL getPortletURL(
+			String controller, String action, PortletMode portletMode,
+			String lifecycle, WindowState windowState)
+		throws Exception {
+
+		return getPortletURL(
+			controller, action, portletMode, lifecycle, windowState, null);
+	}
+
+	protected PortletURL getPortletURL(
+			String controller, String action, PortletMode portletMode,
+			String lifecycle, WindowState windowState, Object... parameters)
+		throws Exception {
+
+		Layout layout = themeDisplay.getLayout();
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			request, portlet.getPortletId(), layout.getPlid(), lifecycle);
+
+		portletURL.setParameter("action", action);
+		portletURL.setParameter("controller", controller);
+
+		portletURL.setPortletMode(portletMode);
+		portletURL.setWindowState(windowState);
+
+		if (parameters == null) {
+			return portletURL;
+		}
+
+		if ((parameters.length % 2) != 0) {
+			throw new IllegalArgumentException(
+				"Parameters length is not an even number");
+		}
+
+		for (int i = 0; i < parameters.length; i += 2) {
+			String parameterName = String.valueOf(parameters[i]);
+			String parameterValue = String.valueOf(parameters[i + 1]);
+
+			portletURL.setParameter(parameterName, parameterValue);
+		}
+
+		return portletURL;
 	}
 
 	protected Throwable getRootCause(Throwable throwable) {
@@ -1222,22 +1351,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	}
 
 	protected void setAuditedModel(BaseModel<?> baseModel) throws Exception {
-		if (!(baseModel instanceof AuditedModel)) {
-			return;
-		}
-
-		AuditedModel auditedModel = (AuditedModel)baseModel;
-
-		if (baseModel.isNew()) {
-			auditedModel.setCompanyId(company.getCompanyId());
-			auditedModel.setUserId(user.getUserId());
-			auditedModel.setUserName(user.getFullName());
-			auditedModel.setCreateDate(new Date());
-			auditedModel.setModifiedDate(auditedModel.getCreateDate());
-		}
-		else {
-			auditedModel.setModifiedDate(new Date());
-		}
+		setAuditedModel(baseModel, company, user);
 	}
 
 	protected void setGroupedModel(BaseModel<?> baseModel) throws Exception {

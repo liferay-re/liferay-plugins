@@ -17,22 +17,23 @@ package com.liferay.sync;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Dennis Ju
+ * @author Brian Wing Shun Chan
  */
-public class OAuthPortletUndeployedException extends PortalException {
+public class SyncDeviceWipeException extends PortalException {
 
-	public OAuthPortletUndeployedException() {
+	public SyncDeviceWipeException() {
+		super();
 	}
 
-	public OAuthPortletUndeployedException(String msg) {
+	public SyncDeviceWipeException(String msg) {
 		super(msg);
 	}
 
-	public OAuthPortletUndeployedException(String msg, Throwable cause) {
+	public SyncDeviceWipeException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public OAuthPortletUndeployedException(Throwable cause) {
+	public SyncDeviceWipeException(Throwable cause) {
 		super(cause);
 	}
 

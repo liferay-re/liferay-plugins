@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.entry.set.hook.upgrade.v1_0_5;
+package com.liferay.asset.entry.set.hook.upgrade.v1_0_6;
 
 import com.liferay.asset.entry.set.util.AssetEntrySetConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -25,10 +25,6 @@ public class UpgradeAssetSharingEntry extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradeAssetSharingEntry();
-	}
-
-	protected void upgradeAssetSharingEntry() throws Exception {
 		StringBundler sb = new StringBundler(6);
 
 		sb.append("delete AssetSharingEntry from AssetSharingEntry left join ");

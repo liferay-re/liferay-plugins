@@ -319,6 +319,27 @@ public class SyncDLObjectLocalServiceUtil {
 		return getService().getSyncDLObjects(repositoryId, parentFolderId);
 	}
 
+	public static void moveSyncDLObjects(
+		com.liferay.sync.model.SyncDLObject parentSyncDLObject)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().moveSyncDLObjects(parentSyncDLObject);
+	}
+
+	public static void restoreSyncDLObjects(
+		com.liferay.sync.model.SyncDLObject parentSyncDLObject)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().restoreSyncDLObjects(parentSyncDLObject);
+	}
+
+	public static void trashSyncDLObjects(
+		com.liferay.sync.model.SyncDLObject parentSyncDLObject)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().trashSyncDLObjects(parentSyncDLObject);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

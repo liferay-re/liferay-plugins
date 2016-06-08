@@ -336,6 +336,30 @@ public class SyncDLObjectLocalServiceWrapper implements SyncDLObjectLocalService
 			parentFolderId);
 	}
 
+	@Override
+	public void moveSyncDLObjects(
+		com.liferay.sync.model.SyncDLObject parentSyncDLObject)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_syncDLObjectLocalService.moveSyncDLObjects(parentSyncDLObject);
+	}
+
+	@Override
+	public void restoreSyncDLObjects(
+		com.liferay.sync.model.SyncDLObject parentSyncDLObject)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_syncDLObjectLocalService.restoreSyncDLObjects(parentSyncDLObject);
+	}
+
+	@Override
+	public void trashSyncDLObjects(
+		com.liferay.sync.model.SyncDLObject parentSyncDLObject)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_syncDLObjectLocalService.trashSyncDLObjects(parentSyncDLObject);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

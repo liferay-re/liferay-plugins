@@ -639,6 +639,9 @@ AUI.add(
 							endTimeYear: endDate.getFullYear(),
 							instanceIndex: schedulerEvent.get('instanceIndex'),
 							recurrence: schedulerEvent.get('recurrence'),
+							serviceContext: {
+								languageId: themeDisplay.getLanguageId()
+							},
 							startTimeDay: startDate.getDate(),
 							startTimeHour: startDate.getHours(),
 							startTimeMinute: startDate.getMinutes(),
@@ -1043,7 +1046,7 @@ AUI.add(
 						date = DateMath.add(date, DateMath.MONTH, 1);
 					}
 					else if (viewName === 'month') {
-						date = DateMath.add(date, DateMath.WEEK, 1);
+						date = DateMath.add(date, DateMath.WEEK, 2);
 					}
 
 					return date;

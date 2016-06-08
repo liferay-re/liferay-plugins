@@ -12,19 +12,18 @@
  * details.
  */
 
-package com.liferay.sync.model;
+package com.liferay.portal.search.solr.http;
 
-import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
+import org.apache.http.client.HttpClient;
 
 /**
- * @author Dennis Ju
+ * @author André de Oliveira
+ * @author László Csontos
  */
-public class SyncConstants extends DLSyncConstants {
+public interface HttpClientFactory {
 
-	public static final String EVENT_RESTORE = EVENT_RESTORE_FROM_TRASH;
+	public HttpClient createInstance() throws Exception;
 
-	public static final String EVENT_TRASH = EVENT_MOVE_TO_TRASH;
-
-	public static final String TYPE_PRIVATE_WORKING_COPY = "privateWorkingCopy";
+	public void shutdown();
 
 }

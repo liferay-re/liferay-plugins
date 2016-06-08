@@ -62,12 +62,21 @@ public class AssetEntrySetIndexer extends BaseIndexer {
 	}
 
 	@Override
+	public void postProcessContextQuery(
+			BooleanQuery contextQuery, SearchContext searchContext)
+		throws Exception {
+
+		contextQuery.addRequiredTerm("parentAssetEntrySetId", 0);
+	}
+
+	@Override
 	public void postProcessSearchQuery(
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
 		addSearchTerm(searchQuery, searchContext, "creatorName", true);
 		addSearchTerm(searchQuery, searchContext, "message", true);
+		addSearchTerm(searchQuery, searchContext, "title", true);
 	}
 
 	@Override
@@ -89,6 +98,7 @@ public class AssetEntrySetIndexer extends BaseIndexer {
 
 		document.addKeyword(Field.TYPE, payloadJSONObject.getString("type"));
 
+		document.addKeyword("createTime", assetEntrySet.getCreateTime());
 		document.addText(
 			"creatorName",
 			AssetEntrySetParticipantInfoUtil.getParticipantName(
@@ -100,6 +110,7 @@ public class AssetEntrySetIndexer extends BaseIndexer {
 			"parentAssetEntrySetId", assetEntrySet.getParentAssetEntrySetId());
 		document.addKeyword(
 			"privateAssetEntrySet", assetEntrySet.getPrivateAssetEntrySet());
+		document.addText("title", payloadJSONObject.getString("title"));
 
 		return document;
 	}

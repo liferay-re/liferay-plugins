@@ -62,6 +62,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -71,6 +73,8 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CalendarFactory;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -159,6 +163,54 @@ public class CalendarPortlet extends MVCPortlet {
 		CalendarResourceServiceUtil.deleteCalendarResource(calendarResourceId);
 	}
 
+	public void importCalendar(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long calendarId = ParamUtil.getLong(uploadPortletRequest, "calendarId");
+
+		File file = uploadPortletRequest.getFile("file");
+
+		String data = FileUtil.read(file);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (Validator.isNotNull(data)) {
+			try {
+				CalendarDataHandler calendarDataHandler =
+					CalendarDataHandlerFactory.getCalendarDataHandler(
+						CalendarDataFormat.ICAL);
+
+				calendarDataHandler.importCalendar(calendarId, data);
+
+				jsonObject.put("success", true);
+			}
+			catch (Exception e) {
+				String message = themeDisplay.translate(
+					"an-unexpected-error-occurred-while-importing-your-" +
+						"file");
+
+				jsonObject.put("error", message);
+				jsonObject.put("success", false);
+			}
+		}
+		else {
+			String message = themeDisplay.translate(
+				"failed-to-import-empty-file");
+
+			jsonObject.put("error", message);
+			jsonObject.put("success", false);
+		}
+
+		writeJSON(actionRequest, actionResponse, jsonObject);
+	}
+
 	@Override
 	public void init() throws PortletException {
 		super.init();
@@ -243,9 +295,6 @@ public class CalendarPortlet extends MVCPortlet {
 			else if (resourceID.equals("exportCalendar")) {
 				serveExportCalendar(resourceRequest, resourceResponse);
 			}
-			else if (resourceID.equals("importCalendar")) {
-				serveImportCalendar(resourceRequest, resourceResponse);
-			}
 			else if (resourceID.equals("resourceCalendars")) {
 				serveResourceCalendars(resourceRequest, resourceResponse);
 			}
@@ -253,7 +302,7 @@ public class CalendarPortlet extends MVCPortlet {
 				serveUpdateCalendarBooking(resourceRequest, resourceResponse);
 			}
 			else {
-				super.serveResource(resourceRequest, resourceResponse);
+				serveUnknownResource(resourceRequest, resourceResponse);
 			}
 		}
 		catch (Exception e) {
@@ -657,8 +706,17 @@ public class CalendarPortlet extends MVCPortlet {
 		if ((recurrenceObj.getFrequency() == Frequency.WEEKLY) &&
 			!daysOfWeek.contains(startTimeDayOfWeek)) {
 
+			java.util.Calendar firstDayJCalendar = JCalendarUtil.getJCalendar(
+				calendarBooking.getStartTime(), timeZone);
+
+			long startTime = firstDayJCalendar.getTimeInMillis();
+
+			long endTime = startTime + calendarBooking.getDuration();
+
+			calendarBooking.setStartTime(startTime);
+			calendarBooking.setEndTime(endTime);
 			calendarBooking.setRecurrence(
-				RecurrenceSerializer.serialize(recurrenceObj));
+					RecurrenceSerializer.serialize(recurrenceObj));
 
 			calendarBooking = RecurrenceUtil.getCalendarBookingInstance(
 				calendarBooking, 1);
@@ -709,7 +767,7 @@ public class CalendarPortlet extends MVCPortlet {
 	}
 
 	protected long getOffset(
-			CalendarBooking calendarBooking, long startTime,
+			CalendarBooking editedCalendarBookingInstance, long newStartTime,
 			Recurrence recurrence)
 		throws PortalException, SystemException {
 
@@ -719,32 +777,38 @@ public class CalendarPortlet extends MVCPortlet {
 			frequency = recurrence.getFrequency();
 		}
 
+		long oldStartTime = editedCalendarBookingInstance.getStartTime();
+		TimeZone timeZone = editedCalendarBookingInstance.getTimeZone();
+
+		CalendarFactory calendarFactory =
+			CalendarFactoryUtil.getCalendarFactory();
+
 		if (frequency == Frequency.WEEKLY) {
 			CalendarBooking firstInstance =
 				CalendarBookingServiceUtil.getCalendarBookingInstance(
-					calendarBooking.getCalendarBookingId(), 0);
+					editedCalendarBookingInstance.getCalendarBookingId(), 0);
 
-			java.util.Calendar startTimeJCalendar =
-				JCalendarUtil.getJCalendar(
-					startTime, calendarBooking.getTimeZone());
+			java.util.Calendar oldStartTimeJCalendar =
+				calendarFactory.getCalendar(oldStartTime, timeZone);
 
 			java.util.Calendar firstInstanceJCalendar =
-				JCalendarUtil.getJCalendar(
-					firstInstance.getStartTime(),
-					calendarBooking.getTimeZone());
+				calendarFactory.getCalendar(
+					firstInstance.getStartTime(), timeZone);
 
 			if (!JCalendarUtil.isSameDayOfWeek(
-					startTimeJCalendar, firstInstanceJCalendar)) {
+					oldStartTimeJCalendar, firstInstanceJCalendar)) {
 
-				startTimeJCalendar = JCalendarUtil.mergeJCalendar(
-					firstInstanceJCalendar, startTimeJCalendar,
-					calendarBooking.getTimeZone());
+				java.util.Calendar newStartTimeJCalendar =
+					calendarFactory.getCalendar(newStartTime, timeZone);
 
-				startTime = startTimeJCalendar.getTimeInMillis();
+				newStartTimeJCalendar = JCalendarUtil.mergeJCalendar(
+					oldStartTimeJCalendar, newStartTimeJCalendar, timeZone);
+
+				newStartTime = newStartTimeJCalendar.getTimeInMillis();
 			}
 		}
 
-		return startTime - calendarBooking.getStartTime();
+		return newStartTime - oldStartTime;
 	}
 
 	protected Recurrence getRecurrence(ActionRequest actionRequest) {
@@ -796,26 +860,26 @@ public class CalendarPortlet extends MVCPortlet {
 			new ArrayList<PositionalWeekday>();
 
 		if (frequency == Frequency.WEEKLY) {
-			for (Weekday weekday : Weekday.values()) {
-				boolean checked = ParamUtil.getBoolean(
-					actionRequest, weekday.getValue());
+			String[] weekdayValues = ParamUtil.getParameterValues(
+				actionRequest, "weekdaysCheckbox");
 
-				if (checked) {
-					java.util.Calendar startTimeJCalendar = getJCalendar(
-						actionRequest, "startTime");
+			for (String weekdayValue : weekdayValues) {
+				Weekday weekday = Weekday.parse(weekdayValue);
 
-					java.util.Calendar weekdayJCalendar =
-						JCalendarUtil.getJCalendar(
-							startTimeJCalendar.getTimeInMillis(), timeZone);
+				java.util.Calendar startTimeJCalendar = getJCalendar(
+					actionRequest, "startTime");
 
-					weekdayJCalendar.set(
-						java.util.Calendar.DAY_OF_WEEK,
-						weekday.getCalendarWeekday());
+				java.util.Calendar weekdayJCalendar =
+					JCalendarUtil.getJCalendar(
+						startTimeJCalendar.getTimeInMillis(), timeZone);
 
-					weekday = Weekday.getWeekday(weekdayJCalendar);
+				weekdayJCalendar.set(
+					java.util.Calendar.DAY_OF_WEEK,
+					weekday.getCalendarWeekday());
 
-					positionalWeekdays.add(new PositionalWeekday(weekday, 0));
-				}
+				weekday = Weekday.getWeekday(weekdayJCalendar);
+
+				positionalWeekdays.add(new PositionalWeekday(weekday, 0));
 			}
 		}
 		else if ((frequency == Frequency.MONTHLY) ||
@@ -1177,52 +1241,6 @@ public class CalendarPortlet extends MVCPortlet {
 			contentType);
 	}
 
-	protected void serveImportCalendar(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
-
-		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(resourceRequest);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long calendarId = ParamUtil.getLong(uploadPortletRequest, "calendarId");
-
-		File file = uploadPortletRequest.getFile("file");
-
-		String data = FileUtil.read(file);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		if (Validator.isNotNull(data)) {
-			try {
-				CalendarDataHandler calendarDataHandler =
-					CalendarDataHandlerFactory.getCalendarDataHandler(
-						CalendarDataFormat.ICAL);
-
-				calendarDataHandler.importCalendar(calendarId, data);
-
-				jsonObject.put("success", true);
-			}
-			catch (Exception e) {
-				String message = themeDisplay.translate(
-						"an-unexpected-error-occurred-while-importing-your-" +
-						"file");
-
-				jsonObject.put("error", message);
-			}
-		}
-		else {
-			String message = themeDisplay.translate(
-				"failed-to-import-empty-file");
-
-			jsonObject.put("error", message);
-		}
-
-		writeJSON(resourceRequest, resourceResponse, jsonObject);
-	}
-
 	protected void serveResourceCalendars(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
@@ -1239,6 +1257,29 @@ public class CalendarPortlet extends MVCPortlet {
 
 		JSONArray jsonObject = CalendarUtil.toCalendarsJSONArray(
 			themeDisplay, calendars);
+
+		writeJSON(resourceRequest, resourceResponse, jsonObject);
+	}
+
+	protected void serveUnknownResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String message = themeDisplay.translate(
+			"calendar-does-not-serve-unknown-resource-x",
+			resourceRequest.getResourceID());
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(message);
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("error", message);
+		jsonObject.put("success", false);
 
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
@@ -1472,5 +1513,7 @@ public class CalendarPortlet extends MVCPortlet {
 
 		return message;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(CalendarPortlet.class);
 
 }

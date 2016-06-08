@@ -33,8 +33,8 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryActionableDynamicQuery;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderActionableDynamicQuery;
-import com.liferay.sync.model.SyncConstants;
 import com.liferay.sync.model.SyncDLObject;
+import com.liferay.sync.model.SyncDLObjectConstants;
 import com.liferay.sync.service.SyncDLObjectLocalServiceUtil;
 import com.liferay.sync.service.persistence.SyncDLObjectActionableDynamicQuery;
 
@@ -50,41 +50,6 @@ public class VerifyUtil {
 		VerifyUtil verifyUtil = new VerifyUtil();
 
 		verifyUtil.doVerify();
-	}
-
-	protected void addSyncDLObject(SyncDLObject syncDLObject)
-		throws PortalException, SystemException {
-
-		String event = syncDLObject.getEvent();
-
-		if (event.equals(SyncConstants.EVENT_DELETE) ||
-			event.equals(SyncConstants.EVENT_TRASH)) {
-
-			SyncDLObjectLocalServiceUtil.addSyncDLObject(
-				0, syncDLObject.getUserId(), syncDLObject.getUserName(),
-				syncDLObject.getModifiedTime(), 0, 0, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, 0, 0, StringPool.BLANK, event, null, 0,
-				StringPool.BLANK, syncDLObject.getType(),
-				syncDLObject.getTypePK(), StringPool.BLANK);
-		}
-		else {
-			SyncDLObjectLocalServiceUtil.addSyncDLObject(
-				syncDLObject.getCompanyId(), syncDLObject.getUserId(),
-				syncDLObject.getUserName(), syncDLObject.getModifiedTime(),
-				syncDLObject.getRepositoryId(),
-				syncDLObject.getParentFolderId(), syncDLObject.getTreePath(),
-				syncDLObject.getName(), syncDLObject.getExtension(),
-				syncDLObject.getMimeType(), syncDLObject.getDescription(),
-				syncDLObject.getChangeLog(), syncDLObject.getExtraSettings(),
-				syncDLObject.getVersion(), syncDLObject.getVersionId(),
-				syncDLObject.getSize(), syncDLObject.getChecksum(),
-				syncDLObject.getEvent(), syncDLObject.getLockExpirationDate(),
-				syncDLObject.getLockUserId(), syncDLObject.getLockUserName(),
-				syncDLObject.getType(), syncDLObject.getTypePK(),
-				syncDLObject.getTypeUuid());
-		}
 	}
 
 	protected void doVerify() throws Exception {
@@ -127,6 +92,11 @@ public class VerifyUtil {
 
 				@Override
 				protected void addCriteria(DynamicQuery dynamicQuery) {
+					Property hiddenProperty = PropertyFactoryUtil.forName(
+						"hidden");
+
+					dynamicQuery.add(hiddenProperty.eq(false));
+
 					Property mountPointProperty = PropertyFactoryUtil.forName(
 						"mountPoint");
 
@@ -156,36 +126,20 @@ public class VerifyUtil {
 
 					DLFolder dlFolder = (DLFolder)object;
 
-					if (!SyncUtil.isSupportedFolder(dlFolder)) {
-						return;
-					}
-
 					try {
-						SyncDLObject syncDLObject =
-							SyncDLObjectLocalServiceUtil.fetchSyncDLObject(
-								SyncConstants.TYPE_FOLDER,
-								dlFolder.getFolderId());
-
-						Date modifiedDate = dlFolder.getModifiedDate();
-
-						if ((syncDLObject != null) &&
-							(syncDLObject.getModifiedTime() >=
-								modifiedDate.getTime())) {
-
-							return;
-						}
-
 						if (dlFolder.getStatus() ==
 								WorkflowConstants.STATUS_APPROVED) {
 
-							addSyncDLObject(
+							SyncUtil.addSyncDLObject(
 								SyncUtil.toSyncDLObject(
-									dlFolder, SyncConstants.EVENT_ADD));
+									dlFolder, 0, StringPool.BLANK,
+									SyncDLObjectConstants.EVENT_ADD));
 						}
 						else {
-							addSyncDLObject(
+							SyncUtil.addSyncDLObject(
 								SyncUtil.toSyncDLObject(
-									dlFolder, SyncConstants.EVENT_TRASH));
+									dlFolder, 0, StringPool.BLANK,
+									SyncDLObjectConstants.EVENT_TRASH));
 						}
 					}
 					catch (Exception e) {
@@ -215,25 +169,25 @@ public class VerifyUtil {
 
 					if ((dlFileEntry.getStatus() !=
 							WorkflowConstants.STATUS_APPROVED) &&
-						(dlFileEntry.getStatus() !=
-							WorkflowConstants.STATUS_IN_TRASH)) {
+						!dlFileEntry.isInTrash()) {
 
 						return;
 					}
 
 					try {
-						SyncDLObject fileEntrySyncDLObject =
+						SyncDLObject syncDLObject =
 							SyncDLObjectLocalServiceUtil.fetchSyncDLObject(
-								SyncConstants.TYPE_FILE,
+								SyncDLObjectConstants.TYPE_FILE,
 								dlFileEntry.getFileEntryId());
 
-						Date modifiedDate = dlFileEntry.getModifiedDate();
+						if (syncDLObject != null) {
+							Date modifiedDate = dlFileEntry.getModifiedDate();
 
-						if ((fileEntrySyncDLObject != null) &&
-							(fileEntrySyncDLObject.getModifiedTime() >=
-								modifiedDate.getTime())) {
+							if (syncDLObject.getModifiedTime() >=
+									modifiedDate.getTime()) {
 
-							return;
+								return;
+							}
 						}
 
 						String event = null;
@@ -241,24 +195,25 @@ public class VerifyUtil {
 						if (dlFileEntry.getStatus() ==
 								WorkflowConstants.STATUS_APPROVED) {
 
-							event = SyncConstants.EVENT_ADD;
+							event = SyncDLObjectConstants.EVENT_ADD;
 						}
 						else {
-							event = SyncConstants.EVENT_TRASH;
+							event = SyncDLObjectConstants.EVENT_TRASH;
 						}
 
 						if (dlFileEntry.isCheckedOut()) {
 							SyncDLObject approvedFileEntrySyncDLObject =
 								SyncUtil.toSyncDLObject(
-									dlFileEntry, event, true, true);
+									dlFileEntry, event,
+									!dlFileEntry.isInTrash(), true);
 
-							addSyncDLObject(approvedFileEntrySyncDLObject);
+							SyncUtil.addSyncDLObject(
+								approvedFileEntrySyncDLObject);
 						}
 
-						fileEntrySyncDLObject = SyncUtil.toSyncDLObject(
-							dlFileEntry, event, true);
-
-						addSyncDLObject(fileEntrySyncDLObject);
+						SyncUtil.addSyncDLObject(
+							SyncUtil.toSyncDLObject(
+								dlFileEntry, event, !dlFileEntry.isInTrash()));
 					}
 					catch (Exception e) {
 						_log.error(e, e);
@@ -285,7 +240,7 @@ public class VerifyUtil {
 	protected void verifySyncDLObjects(final long groupId) throws Exception {
 		_syncDLObjectsCount = 0;
 
-		ActionableDynamicQuery syncDLObjectActionableDynamicQuery =
+		ActionableDynamicQuery actionableDynamicQuery =
 			new SyncDLObjectActionableDynamicQuery() {
 
 				@Override
@@ -294,7 +249,7 @@ public class VerifyUtil {
 						"event");
 
 					dynamicQuery.add(
-						eventProperty.ne(SyncConstants.EVENT_DELETE));
+						eventProperty.ne(SyncDLObjectConstants.EVENT_DELETE));
 
 					Property repositoryIdProperty = PropertyFactoryUtil.forName(
 						"repositoryId");
@@ -316,34 +271,37 @@ public class VerifyUtil {
 
 					String type = syncDLObject.getType();
 
-					if (type.equals(SyncConstants.TYPE_FILE)) {
+					if (type.equals(SyncDLObjectConstants.TYPE_FILE)) {
 						DLFileEntry dlFileEntry =
 							DLFileEntryLocalServiceUtil.fetchDLFileEntry(
 								syncDLObject.getTypePK());
 
 						if (dlFileEntry == null) {
-							syncDLObject.setEvent(SyncConstants.EVENT_DELETE);
+							syncDLObject.setEvent(
+								SyncDLObjectConstants.EVENT_DELETE);
 							syncDLObject.setModifiedTime(
 								System.currentTimeMillis());
 
-							addSyncDLObject(syncDLObject);
+							SyncUtil.addSyncDLObject(syncDLObject);
 						}
 					}
-					else if (type.equals(SyncConstants.TYPE_FOLDER)) {
+					else if (type.equals(SyncDLObjectConstants.TYPE_FOLDER)) {
 						DLFolder dlFolder =
 							DLFolderLocalServiceUtil.fetchDLFolder(
 								syncDLObject.getTypePK());
 
 						if (dlFolder == null) {
-							syncDLObject.setEvent(SyncConstants.EVENT_DELETE);
+							syncDLObject.setEvent(
+								SyncDLObjectConstants.EVENT_DELETE);
 							syncDLObject.setModifiedTime(
 								System.currentTimeMillis());
 
-							addSyncDLObject(syncDLObject);
+							SyncUtil.addSyncDLObject(syncDLObject);
 						}
 					}
 					else if (type.equals(
-								SyncConstants.TYPE_PRIVATE_WORKING_COPY)) {
+								SyncDLObjectConstants.
+									TYPE_PRIVATE_WORKING_COPY)) {
 
 						DLFileEntry dlFileEntry =
 							DLFileEntryLocalServiceUtil.fetchDLFileEntry(
@@ -361,10 +319,9 @@ public class VerifyUtil {
 
 			};
 
-		_syncDLObjectsTotalCount =
-			syncDLObjectActionableDynamicQuery.performCount();
+		_syncDLObjectsTotalCount = actionableDynamicQuery.performCount();
 
-		syncDLObjectActionableDynamicQuery.performActions();
+		actionableDynamicQuery.performActions();
 
 		logCount(
 			_syncDLObjectsTotalCount, _syncDLObjectsTotalCount,
