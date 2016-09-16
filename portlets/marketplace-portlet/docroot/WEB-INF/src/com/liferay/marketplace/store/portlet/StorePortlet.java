@@ -139,7 +139,7 @@ public class StorePortlet extends RemoteMVCPortlet {
 
 		addOAuthParameter(
 			oAuthRequest, serverNamespace.concat("compatibility"),
-			String.valueOf(ReleaseInfo.getBuildNumber()));
+			getBuildNumber());
 		addOAuthParameter(
 			oAuthRequest, serverNamespace.concat("javax.portlet.action"),
 			"getPrepackagedApps");
@@ -473,7 +473,7 @@ public class StorePortlet extends RemoteMVCPortlet {
 		if (!parameterMap.containsKey("compatibility")) {
 			parameterMap.put(
 				"compatibility",
-				new String[] {String.valueOf(ReleaseInfo.getBuildNumber())});
+				new String[] {getBuildNumber()});
 		}
 
 		parameterMap.put(
@@ -483,6 +483,16 @@ public class StorePortlet extends RemoteMVCPortlet {
 			});
 	}
 
+	/** Special fix for RE - remove latest number from version */
+	private String getBuildNumber () {
+		String buildNumber = String.valueOf(ReleaseInfo.getBuildNumber());
+		if (buildNumber.length() > 4) {
+			buildNumber = buildNumber.substring(0, 4);
+		}
+		
+		return buildNumber;
+	}
+	
 	private final ReentrantLock _reentrantLock = new ReentrantLock();
 
 }
