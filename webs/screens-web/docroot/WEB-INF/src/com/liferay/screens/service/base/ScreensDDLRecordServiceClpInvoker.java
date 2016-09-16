@@ -39,13 +39,15 @@ public class ScreensDDLRecordServiceClpInvoker {
 		_methodName37 = "getDDLRecords";
 
 		_methodParameterTypes37 = new String[] {
-				"long", "java.util.Locale", "int", "int"
+				"long", "java.util.Locale", "int", "int",
+				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
 		_methodName38 = "getDDLRecords";
 
 		_methodParameterTypes38 = new String[] {
-				"long", "long", "java.util.Locale", "int", "int"
+				"long", "long", "java.util.Locale", "int", "int",
+				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
 		_methodName39 = "getDDLRecordsCount";
@@ -82,7 +84,8 @@ public class ScreensDDLRecordServiceClpInvoker {
 			return ScreensDDLRecordServiceUtil.getDDLRecords(((Long)arguments[0]).longValue(),
 				(java.util.Locale)arguments[1],
 				((Integer)arguments[2]).intValue(),
-				((Integer)arguments[3]).intValue());
+				((Integer)arguments[3]).intValue(),
+				(com.liferay.portal.kernel.util.OrderByComparator)arguments[4]);
 		}
 
 		if (_methodName38.equals(name) &&
@@ -91,7 +94,8 @@ public class ScreensDDLRecordServiceClpInvoker {
 				((Long)arguments[1]).longValue(),
 				(java.util.Locale)arguments[2],
 				((Integer)arguments[3]).intValue(),
-				((Integer)arguments[4]).intValue());
+				((Integer)arguments[4]).intValue(),
+				(com.liferay.portal.kernel.util.OrderByComparator)arguments[5]);
 		}
 
 		if (_methodName39.equals(name) &&

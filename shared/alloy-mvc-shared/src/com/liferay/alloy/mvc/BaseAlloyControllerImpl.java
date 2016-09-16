@@ -15,8 +15,8 @@
 package com.liferay.alloy.mvc;
 
 import com.liferay.alloy.mvc.jsonwebservice.AlloyMockUtil;
+import com.liferay.compat.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.counter.service.CounterLocalServiceUtil;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.bean.ConstantsBeanFactoryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -698,7 +698,8 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	protected boolean hasPermission() {
 		if (permissioned &&
 			!AlloyPermission.contains(
-				themeDisplay, controllerPath, actionPath)) {
+				themeDisplay, portlet.getRootPortletId(), controllerPath,
+				actionPath)) {
 
 			return false;
 		}

@@ -394,6 +394,47 @@ AUI.add(
 				);
 			},
 
+			invokeActionURL: function(params) {
+				var instance = this;
+
+				var url = Liferay.PortletURL.createActionURL();
+
+				url.setName(params.actionName);
+				url.setPortletId('1_WAR_calendarportlet');
+				url.setWindowState('NORMAL');
+
+				A.each(
+					params.queryParameters,
+					function(item, index, collection) {
+						url.setParameter(index, item);
+					}
+				);
+
+				var payload;
+
+				if (params.payload) {
+					payload = Liferay.Util.ns(instance.PORTLET_NAMESPACE, params.payload);
+				}
+
+				A.io.request(
+					url.toString(),
+					{
+						data: A.merge(
+								payload,
+								{
+									p_auth: Liferay.authToken
+								}
+							),
+						dataType: 'JSON',
+						on: {
+							success: function() {
+								params.callback(this.get('responseData'));
+							}
+						}
+					}
+				);
+			},
+
 			invokeResourceURL: function(params) {
 				var instance = this;
 
@@ -603,8 +644,9 @@ AUI.add(
 				var startDate = schedulerEvent.get('startDate');
 				var endDate = schedulerEvent.get('endDate');
 
-				instance.invokeResourceURL(
+				instance.invokeActionURL(
 					{
+						actionName: 'updateSchedulerCalendarBooking',
 						callback: function(data) {
 							schedulerEvent.set(
 									'loading',
@@ -649,8 +691,7 @@ AUI.add(
 							startTimeYear: startDate.getFullYear(),
 							title: LString.unescapeHTML(schedulerEvent.get('content')),
 							updateInstance: updateInstance
-						},
-						resourceId: 'updateCalendarBooking'
+						}
 					}
 				);
 			}
