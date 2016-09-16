@@ -63,7 +63,7 @@
 		<licenses><![CDATA[LGPL]]></licenses>
 		<liferay-versions><![CDATA[6.2.0+]]></liferay-versions>
 		<releng>
-			<bundle><![CDATA[false]]></bundle>
+			<bundle><![CDATA[true]]></bundle>
 			<category><![CDATA[]]></category>
 			<demo-url><![CDATA[]]></demo-url>
 			<dependent-apps><![CDATA[]]></dependent-apps>
@@ -211,7 +211,7 @@
 		<licenses><![CDATA[LGPL]]></licenses>
 		<liferay-versions><![CDATA[6.2.0+]]></liferay-versions>
 		<releng>
-			<bundle><![CDATA[false]]></bundle>
+			<bundle><![CDATA[true]]></bundle>
 			<category><![CDATA[]]></category>
 			<demo-url><![CDATA[]]></demo-url>
 			<dependent-apps><![CDATA[]]></dependent-apps>
@@ -453,7 +453,7 @@
 		<licenses><![CDATA[AGPL]]></licenses>
 		<liferay-versions><![CDATA[6.2.0+]]></liferay-versions>
 		<releng>
-			<bundle><![CDATA[false]]></bundle>
+			<bundle><![CDATA[true]]></bundle>
 			<category><![CDATA[]]></category>
 			<demo-url><![CDATA[]]></demo-url>
 			<dependent-apps><![CDATA[]]></dependent-apps>
@@ -790,7 +790,7 @@
 		<licenses><![CDATA[LGPL]]></licenses>
 		<liferay-versions><![CDATA[6.2.0+]]></liferay-versions>
 		<releng>
-			<bundle><![CDATA[false]]></bundle>
+			<bundle><![CDATA[true]]></bundle>
 			<category><![CDATA[Communication]]></category>
 			<demo-url><![CDATA[]]></demo-url>
 			<dependent-apps><![CDATA[]]></dependent-apps>
@@ -841,7 +841,7 @@
 		<licenses><![CDATA[AGPL]]></licenses>
 		<liferay-versions><![CDATA[6.2.0+]]></liferay-versions>
 		<releng>
-			<bundle><![CDATA[false]]></bundle>
+			<bundle><![CDATA[true]]></bundle>
 			<category><![CDATA[]]></category>
 			<demo-url><![CDATA[]]></demo-url>
 			<dependent-apps><![CDATA[]]></dependent-apps>
@@ -893,7 +893,7 @@
 		<licenses><![CDATA[AGPL]]></licenses>
 		<liferay-versions><![CDATA[6.2.0+]]></liferay-versions>
 		<releng>
-			<bundle><![CDATA[false]]></bundle>
+			<bundle><![CDATA[true]]></bundle>
 			<category><![CDATA[]]></category>
 			<demo-url><![CDATA[]]></demo-url>
 			<dependent-apps><![CDATA[]]></dependent-apps>
@@ -1204,7 +1204,7 @@
 		<licenses><![CDATA[AGPL]]></licenses>
 		<liferay-versions><![CDATA[6.2.0+]]></liferay-versions>
 		<releng>
-			<bundle><![CDATA[false]]></bundle>
+			<bundle><![CDATA[true]]></bundle>
 			<category><![CDATA[]]></category>
 			<demo-url><![CDATA[]]></demo-url>
 			<dependent-apps><![CDATA[]]></dependent-apps>
@@ -1362,7 +1362,7 @@
 		<licenses><![CDATA[AGPL]]></licenses>
 		<liferay-versions><![CDATA[6.2.0+]]></liferay-versions>
 		<releng>
-			<bundle><![CDATA[false]]></bundle>
+			<bundle><![CDATA[true]]></bundle>
 			<category><![CDATA[]]></category>
 			<demo-url><![CDATA[]]></demo-url>
 			<dependent-apps><![CDATA[]]></dependent-apps>
@@ -1986,7 +1986,7 @@
 		<licenses><![CDATA[AGPL]]></licenses>
 		<liferay-versions><![CDATA[6.2.0+]]></liferay-versions>
 		<releng>
-			<bundle><![CDATA[false]]></bundle>
+			<bundle><![CDATA[true]]></bundle>
 			<category><![CDATA[]]></category>
 			<demo-url><![CDATA[]]></demo-url>
 			<dependent-apps><![CDATA[]]></dependent-apps>
@@ -2010,7 +2010,7 @@
 		<licenses><![CDATA[AGPL]]></licenses>
 		<liferay-versions><![CDATA[6.2.0+]]></liferay-versions>
 		<releng>
-			<bundle><![CDATA[false]]></bundle>
+			<bundle><![CDATA[true]]></bundle>
 			<category><![CDATA[]]></category>
 			<demo-url><![CDATA[]]></demo-url>
 			<dependent-apps><![CDATA[]]></dependent-apps>
@@ -2034,7 +2034,7 @@
 		<licenses><![CDATA[AGPL]]></licenses>
 		<liferay-versions><![CDATA[6.2.0+]]></liferay-versions>
 		<releng>
-			<bundle><![CDATA[false]]></bundle>
+			<bundle><![CDATA[true]]></bundle>
 			<category><![CDATA[Productivity]]></category>
 			<demo-url><![CDATA[]]></demo-url>
 			<dependent-apps><![CDATA[calendar-portlet, chat-portlet, contacts-portlet, deploy-listener-hook, events-display-portlet, microblogs-portlet, notifications-portlet, portal-compat-hook, private-messaging-portlet, so-activities-hook, so-announcements-portlet, so-configurations-portlet, so-hook, so-theme, tasks-portlet, wysiwyg-portlet]]></dependent-apps>
@@ -2063,7 +2063,7 @@
 		<licenses><![CDATA[LGPL]]></licenses>
 		<liferay-versions><![CDATA[6.2.0+]]></liferay-versions>
 		<releng>
-			<bundle><![CDATA[false]]></bundle>
+			<bundle><![CDATA[true]]></bundle>
 			<category><![CDATA[]]></category>
 			<demo-url><![CDATA[]]></demo-url>
 			<dependent-apps><![CDATA[]]></dependent-apps>
@@ -2170,7 +2170,7 @@
 		<licenses><![CDATA[AGPL]]></licenses>
 		<liferay-versions><![CDATA[6.2.0+]]></liferay-versions>
 		<releng>
-			<bundle><![CDATA[false]]></bundle>
+			<bundle><![CDATA[true]]></bundle>
 			<category><![CDATA[]]></category>
 			<demo-url><![CDATA[]]></demo-url>
 			<dependent-apps><![CDATA[]]></dependent-apps>
@@ -2910,7 +2910,7 @@
 		<licenses><![CDATA[LGPL]]></licenses>
 		<liferay-versions><![CDATA[6.2.0+]]></liferay-versions>
 		<releng>
-			<bundle><![CDATA[false]]></bundle>
+			<bundle><![CDATA[true]]></bundle>
 			<category><![CDATA[Utility]]></category>
 			<demo-url><![CDATA[]]></demo-url>
 			<dependent-apps><![CDATA[]]></dependent-apps>
@@ -3083,7 +3083,7 @@
 		<licenses><![CDATA[AGPL]]></licenses>
 		<liferay-versions><![CDATA[6.2.0+]]></liferay-versions>
 		<releng>
-			<bundle><![CDATA[false]]></bundle>
+			<bundle><![CDATA[true]]></bundle>
 			<category><![CDATA[]]></category>
 			<demo-url><![CDATA[]]></demo-url>
 			<dependent-apps><![CDATA[]]></dependent-apps>
