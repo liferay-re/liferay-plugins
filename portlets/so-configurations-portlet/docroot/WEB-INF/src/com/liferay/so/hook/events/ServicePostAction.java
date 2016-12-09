@@ -120,6 +120,7 @@ public class ServicePostAction extends Action {
 			return;
 		}
 
+		/* Do not redirect to configuration after enabling SO
 		Group group = GroupLocalServiceUtil.getGroup(
 			themeDisplay.getCompanyId(), GroupConstants.CONTROL_PANEL);
 
@@ -132,6 +133,7 @@ public class ServicePostAction extends Action {
 		portletURL.setWindowState(WindowState.MAXIMIZED);
 
 		response.sendRedirect(portletURL.toString());
+		*/
 	}
 
 	protected void doRun(
