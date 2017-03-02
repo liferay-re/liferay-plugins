@@ -175,7 +175,7 @@ public class FileSystemImporter extends BaseImporter {
 					getMap(name), null,
 					DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 					StringPool.BLANK, getDDMTemplateLanguage(file.getName()),
-					script, ddmTemplate.getCacheable(), serviceContext);
+					script, ddmTemplate.getCacheable(), false, StringPool.BLANK, null, serviceContext);
 			}
 		}
 		catch (PortalException e) {
@@ -530,7 +530,7 @@ public class FileSystemImporter extends BaseImporter {
 					ddmTemplate.getTemplateId(),
 					PortalUtil.getClassNameId(DDMStructure.class), getMap(name),
 					null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
-					language, script, ddmTemplate.getCacheable(),
+					language, script, ddmTemplate.getCacheable(), false, StringPool.BLANK, null,
 					serviceContext);
 			}
 		}
@@ -626,7 +626,7 @@ public class FileSystemImporter extends BaseImporter {
 					PortalUtil.getClassNameId(DDMStructure.class), getMap(name),
 					null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
 					language, replaceFileEntryURL(xsl),
-					ddmTemplate.getCacheable(), serviceContext);
+					ddmTemplate.getCacheable(), false, null, null, serviceContext);
 			}
 		}
 		catch (PortalException e) {
