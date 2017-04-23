@@ -1297,6 +1297,12 @@ AUI.add(
 						instance.load();
 					},
 
+					_afterAddEventModalLoad: function(event) {
+						var instance = this;
+
+						event.target.node.getDOMNode().contentWindow.focus();
+					},
+
 					_afterSchedulerEventChange: function(event) {
 						var instance = this;
 
@@ -1456,6 +1462,12 @@ AUI.add(
 										titleCurrentValue: ''
 									}
 								)
+							},
+							function(modal) {
+								modal.iframe.on(
+									'load',
+									A.bind(instance._afterAddEventModalLoad, instance)
+								);
 							}
 						);
 					},
@@ -1557,6 +1569,35 @@ AUI.add(
 		);
 
 		Liferay.Scheduler = Scheduler;
+
+		var SchedulerDayView = A.Component.create(
+			{
+				EXTENDS: A.SchedulerDayView,
+
+				NAME: 'scheduler-day-view',
+
+				ATTRS: {
+					navigationDateFormatter: {
+						value: function(date) {
+							var instance = this;
+
+							var scheduler = instance.get('scheduler');
+
+							return A.DataType.Date.format(
+								date,
+								{
+									format: Liferay.Language.get('a-b-d-y'),
+									locale: scheduler.get('locale')
+								}
+							);
+						},
+						validator: isFunction
+					}
+				}
+			}
+		);
+
+		Liferay.SchedulerDayView = SchedulerDayView;
 
 		var SchedulerEventRecorder = A.Component.create(
 			{

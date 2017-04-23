@@ -143,7 +143,7 @@ public class AssetEntrySetLocalServiceClpInvoker {
 		_methodName71 = "getNewAssetEntrySets";
 
 		_methodParameterTypes71 = new String[] {
-				"long", "long", "boolean", "long", "long",
+				"long", "long", "boolean", "long", "boolean", "long",
 				"com.liferay.portal.kernel.json.JSONArray",
 				"com.liferay.portal.kernel.json.JSONArray", "long[][]",
 				"long[][]", "java.lang.String[][]", "int", "int"
@@ -154,20 +154,21 @@ public class AssetEntrySetLocalServiceClpInvoker {
 		_methodParameterTypes72 = new String[] {
 				"long", "long", "long", "long", "int",
 				"com.liferay.portal.kernel.json.JSONArray",
-				"java.lang.String[][]", "int", "int"
+				"com.liferay.portal.kernel.json.JSONArray", "long[][]",
+				"long[][]", "java.lang.String[][]", "int", "int"
 			};
 
 		_methodName73 = "getNewChildAssetEntrySets";
 
 		_methodParameterTypes73 = new String[] {
-				"long", "long", "long", "int", "int",
+				"long", "long", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
 		_methodName74 = "getOldAssetEntrySets";
 
 		_methodParameterTypes74 = new String[] {
-				"long", "long", "boolean", "long", "long",
+				"long", "long", "boolean", "long", "boolean", "long",
 				"com.liferay.portal.kernel.json.JSONArray",
 				"com.liferay.portal.kernel.json.JSONArray", "long[][]",
 				"long[][]", "java.lang.String[][]", "int", "int"
@@ -178,13 +179,14 @@ public class AssetEntrySetLocalServiceClpInvoker {
 		_methodParameterTypes75 = new String[] {
 				"long", "long", "long", "long", "int",
 				"com.liferay.portal.kernel.json.JSONArray",
-				"java.lang.String[][]", "int", "int"
+				"com.liferay.portal.kernel.json.JSONArray", "long[][]",
+				"long[][]", "java.lang.String[][]", "int", "int"
 			};
 
 		_methodName76 = "getOldChildAssetEntrySets";
 
 		_methodParameterTypes76 = new String[] {
-				"long", "long", "long", "int", "int",
+				"long", "long", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
@@ -348,13 +350,14 @@ public class AssetEntrySetLocalServiceClpInvoker {
 				((Long)arguments[1]).longValue(),
 				((Boolean)arguments[2]).booleanValue(),
 				((Long)arguments[3]).longValue(),
-				((Long)arguments[4]).longValue(),
-				(com.liferay.portal.kernel.json.JSONArray)arguments[5],
+				((Boolean)arguments[4]).booleanValue(),
+				((Long)arguments[5]).longValue(),
 				(com.liferay.portal.kernel.json.JSONArray)arguments[6],
-				(long[])arguments[7], (long[])arguments[8],
-				(java.lang.String[])arguments[9],
-				((Integer)arguments[10]).intValue(),
-				((Integer)arguments[11]).intValue());
+				(com.liferay.portal.kernel.json.JSONArray)arguments[7],
+				(long[])arguments[8], (long[])arguments[9],
+				(java.lang.String[])arguments[10],
+				((Integer)arguments[11]).intValue(),
+				((Integer)arguments[12]).intValue());
 		}
 
 		if (_methodName72.equals(name) &&
@@ -365,19 +368,20 @@ public class AssetEntrySetLocalServiceClpInvoker {
 				((Long)arguments[3]).longValue(),
 				((Integer)arguments[4]).intValue(),
 				(com.liferay.portal.kernel.json.JSONArray)arguments[5],
-				(java.lang.String[])arguments[6],
-				((Integer)arguments[7]).intValue(),
-				((Integer)arguments[8]).intValue());
+				(com.liferay.portal.kernel.json.JSONArray)arguments[6],
+				(long[])arguments[7], (long[])arguments[8],
+				(java.lang.String[])arguments[9],
+				((Integer)arguments[10]).intValue(),
+				((Integer)arguments[11]).intValue());
 		}
 
 		if (_methodName73.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes73, parameterTypes)) {
 			return AssetEntrySetLocalServiceUtil.getNewChildAssetEntrySets(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
-				((Long)arguments[2]).longValue(),
+				((Integer)arguments[2]).intValue(),
 				((Integer)arguments[3]).intValue(),
-				((Integer)arguments[4]).intValue(),
-				(com.liferay.portal.kernel.util.OrderByComparator)arguments[5]);
+				(com.liferay.portal.kernel.util.OrderByComparator)arguments[4]);
 		}
 
 		if (_methodName74.equals(name) &&
@@ -386,13 +390,14 @@ public class AssetEntrySetLocalServiceClpInvoker {
 				((Long)arguments[1]).longValue(),
 				((Boolean)arguments[2]).booleanValue(),
 				((Long)arguments[3]).longValue(),
-				((Long)arguments[4]).longValue(),
-				(com.liferay.portal.kernel.json.JSONArray)arguments[5],
+				((Boolean)arguments[4]).booleanValue(),
+				((Long)arguments[5]).longValue(),
 				(com.liferay.portal.kernel.json.JSONArray)arguments[6],
-				(long[])arguments[7], (long[])arguments[8],
-				(java.lang.String[])arguments[9],
-				((Integer)arguments[10]).intValue(),
-				((Integer)arguments[11]).intValue());
+				(com.liferay.portal.kernel.json.JSONArray)arguments[7],
+				(long[])arguments[8], (long[])arguments[9],
+				(java.lang.String[])arguments[10],
+				((Integer)arguments[11]).intValue(),
+				((Integer)arguments[12]).intValue());
 		}
 
 		if (_methodName75.equals(name) &&
@@ -403,19 +408,20 @@ public class AssetEntrySetLocalServiceClpInvoker {
 				((Long)arguments[3]).longValue(),
 				((Integer)arguments[4]).intValue(),
 				(com.liferay.portal.kernel.json.JSONArray)arguments[5],
-				(java.lang.String[])arguments[6],
-				((Integer)arguments[7]).intValue(),
-				((Integer)arguments[8]).intValue());
+				(com.liferay.portal.kernel.json.JSONArray)arguments[6],
+				(long[])arguments[7], (long[])arguments[8],
+				(java.lang.String[])arguments[9],
+				((Integer)arguments[10]).intValue(),
+				((Integer)arguments[11]).intValue());
 		}
 
 		if (_methodName76.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes76, parameterTypes)) {
 			return AssetEntrySetLocalServiceUtil.getOldChildAssetEntrySets(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
-				((Long)arguments[2]).longValue(),
+				((Integer)arguments[2]).intValue(),
 				((Integer)arguments[3]).intValue(),
-				((Integer)arguments[4]).intValue(),
-				(com.liferay.portal.kernel.util.OrderByComparator)arguments[5]);
+				(com.liferay.portal.kernel.util.OrderByComparator)arguments[4]);
 		}
 
 		if (_methodName77.equals(name) &&

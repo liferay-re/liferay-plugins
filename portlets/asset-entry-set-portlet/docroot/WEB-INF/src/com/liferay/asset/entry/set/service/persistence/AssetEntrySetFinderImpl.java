@@ -124,9 +124,10 @@ public class AssetEntrySetFinderImpl
 	@Override
 	public List<AssetEntrySet> findByCT_PAESI_ST_CNI(
 			long classNameId, long classPK, long createTime,
-			boolean gtCreateTime, long parentAssetEntrySetId, long stickyTime,
+			boolean gtCreateTime, long parentAssetEntrySetId,
+			boolean privateAssetEntrySet, long stickyTime,
 			JSONArray creatorJSONArray, JSONArray sharedToJSONArray,
-			long[] includeAssetEntrySetIds, long[] excludeAssetEntrySetIds,
+			long[] excludeAssetEntrySetIds, long[] includeAssetEntrySetIds,
 			String[] assetTagNames, int start, int end)
 		throws SystemException {
 
@@ -145,40 +146,10 @@ public class AssetEntrySetFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_CT_PAESI_ST_CNI);
 
-			sql = StringUtil.replace(
-				sql, "[$JOIN_BY$]",
-				getJoinBy(sharedToJSONArray, assetTagNames));
-
-			if (gtCreateTime) {
-				sql = StringUtil.replace(
-					sql, "[$CREATE_TIME_COMPARATOR$]", ">");
-			}
-			else {
-				sql = StringUtil.replace(
-					sql, "[$CREATE_TIME_COMPARATOR$]", "<=");
-			}
-
-			List<String> whereClauses = new ArrayList<String>();
-
-			whereClauses.add(
-				getAssetTagNames(classNameId, classPK, assetTagNames));
-			whereClauses.add(
-				getCreator(classNameId, classPK, creatorJSONArray));
-			whereClauses.add(
-				getIncludeAssetEntrySetIds(
-					classNameId, classPK, includeAssetEntrySetIds));
-			whereClauses.add(
-				getSharedTo(classNameId, classPK, sharedToJSONArray));
-
-			whereClauses.removeAll(_emptyList);
-
-			sql = StringUtil.replace(
-				sql, "[$WHERE$]",
-				ListUtil.toString(whereClauses, StringPool.BLANK, " OR "));
-
-			sql = StringUtil.replace(
-				sql, "[$EXCLUDE_ASSET_ENTRY_SET_IDS$]",
-				getExcludeAssetEntrySetIds(excludeAssetEntrySetIds));
+			sql = updateSQL(
+				sql, classNameId, classPK, gtCreateTime, privateAssetEntrySet,
+				creatorJSONArray, sharedToJSONArray, excludeAssetEntrySetIds,
+				includeAssetEntrySetIds, assetTagNames);
 
 			SQLQuery q = session.createSQLQuery(sql);
 
@@ -207,9 +178,10 @@ public class AssetEntrySetFinderImpl
 	@Override
 	public List<AssetEntrySet> findByMT_PAESI_ST_CNI(
 			long classNameId, long classPK, long modifiedTime,
-			boolean gtModifiedTime, long parentAssetEntrySetId, long stickyTime,
+			boolean gtModifiedTime, long parentAssetEntrySetId,
+			boolean privateAssetEntrySet, long stickyTime,
 			JSONArray creatorJSONArray, JSONArray sharedToJSONArray,
-			long[] includeAssetEntrySetIds, long[] excludeAssetEntrySetIds,
+			long[] excludeAssetEntrySetIds, long[] includeAssetEntrySetIds,
 			String[] assetTagNames, int start, int end)
 		throws SystemException {
 
@@ -228,42 +200,12 @@ public class AssetEntrySetFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_MT_PAESI_ST_CNI);
 
-			sql = StringUtil.replace(
-				sql, "[$JOIN_BY$]",
-				getJoinBy(sharedToJSONArray, assetTagNames));
-
-			if (gtModifiedTime) {
-				sql = StringUtil.replace(
-					sql, "[$MODIFIED_TIME_COMPARATOR$]", ">");
-			}
-			else {
-				sql = StringUtil.replace(
-					sql, "[$MODIFIED_TIME_COMPARATOR$]", "<=");
-			}
-
-			List<String> whereClauses = new ArrayList<String>();
-
-			whereClauses.add(
-				getAssetTagNames(classNameId, classPK, assetTagNames));
-			whereClauses.add(
-				getCreator(classNameId, classPK, creatorJSONArray));
-			whereClauses.add(
-				getIncludeAssetEntrySetIds(
-					classNameId, classPK, includeAssetEntrySetIds));
-			whereClauses.add(
-				getSharedTo(classNameId, classPK, sharedToJSONArray));
-
-			whereClauses.removeAll(_emptyList);
-
-			sql = StringUtil.replace(
-				sql, "[$WHERE$]",
-				ListUtil.toString(whereClauses, StringPool.BLANK, " OR "));
-
-			sql = StringUtil.replace(
-				sql, "[$EXCLUDE_ASSET_ENTRY_SET_IDS$]",
-				getExcludeAssetEntrySetIds(excludeAssetEntrySetIds));
-
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSQLQuery(
+				updateSQL(
+					sql, classNameId, classPK, gtModifiedTime,
+					privateAssetEntrySet, creatorJSONArray, sharedToJSONArray,
+					excludeAssetEntrySetIds, includeAssetEntrySetIds,
+					assetTagNames));
 
 			q.addEntity("AssetEntrySet", AssetEntrySetImpl.class);
 
@@ -291,8 +233,9 @@ public class AssetEntrySetFinderImpl
 	public List<AssetEntrySet> findByCT_PAESI_ST_T_CNI(
 			long classNameId, long classPK, long createTime,
 			boolean gtCreateTime, long parentAssetEntrySetId, long stickyTime,
-			int type, JSONArray sharedToJSONArray, String[] assetTagNames,
-			int start, int end)
+			int type, JSONArray creatorJSONArray, JSONArray sharedToJSONArray,
+			long[] excludeAssetEntrySetIds, long[] includeAssetEntrySetIds,
+			String[] assetTagNames, int start, int end)
 		throws SystemException {
 
 		if (((sharedToJSONArray == null) ||
@@ -309,33 +252,12 @@ public class AssetEntrySetFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_CT_PAESI_ST_T_CNI);
 
-			sql = StringUtil.replace(
-				sql, "[$JOIN_BY$]",
-				getJoinBy(sharedToJSONArray, assetTagNames));
-
-			if (gtCreateTime) {
-				sql = StringUtil.replace(
-					sql, "[$CREATE_TIME_COMPARATOR$]", ">");
-			}
-			else {
-				sql = StringUtil.replace(
-					sql, "[$CREATE_TIME_COMPARATOR$]", "<=");
-			}
-
-			List<String> whereClauses = new ArrayList<String>();
-
-			whereClauses.add(
-				getSharedTo(classNameId, classPK, sharedToJSONArray));
-			whereClauses.add(
-				getAssetTagNames(classNameId, classPK, assetTagNames));
-
-			whereClauses.removeAll(_emptyList);
-
-			sql = StringUtil.replace(
-				sql, "[$WHERE$]",
-				ListUtil.toString(whereClauses, StringPool.BLANK, " OR "));
-
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSQLQuery(
+				updateSQL(
+					sql, classNameId, classPK, gtCreateTime, false,
+					creatorJSONArray, sharedToJSONArray,
+					excludeAssetEntrySetIds, includeAssetEntrySetIds,
+					assetTagNames));
 
 			q.addEntity("AssetEntrySet", AssetEntrySetImpl.class);
 
@@ -584,6 +506,29 @@ public class AssetEntrySetFinderImpl
 		return false;
 	}
 
+	protected String replacePrivateAssetEntrySet(
+		String sql, boolean privateAssetEntrySet) {
+
+		String privateAssetEntrySetSQL = StringPool.BLANK;
+
+		if (privateAssetEntrySet) {
+			privateAssetEntrySetSQL = _PRIVATE_ASSET_ENTRY_SET_SQL;
+		}
+
+		return StringUtil.replace(
+			sql, "[$PRIVATE_ASSET_ENTRY_SET]", privateAssetEntrySetSQL);
+	}
+
+	protected String replaceTimeComparator(String sql, boolean greaterThan) {
+		String comparator = StringPool.LESS_THAN_OR_EQUAL;
+
+		if (greaterThan) {
+			comparator = StringPool.GREATER_THAN;
+		}
+
+		return StringUtil.replace(sql, "[$TIME_COMPARATOR$]", comparator);
+	}
+
 	protected void setAssetTagNames(QueryPos qPos, String[] assetTagNames) {
 		if (ArrayUtil.isEmpty(assetTagNames)) {
 			return;
@@ -593,6 +538,43 @@ public class AssetEntrySetFinderImpl
 			qPos.add(StringUtil.toLowerCase(assetTagName));
 		}
 	}
+
+	protected String updateSQL(
+			String sql, long classNameId, long classPK, boolean greaterThan,
+			boolean privateAssetEntrySet, JSONArray creatorJSONArray,
+			JSONArray sharedToJSONArray, long[] excludeAssetEntrySetIds,
+			long[] includeAssetEntrySetIds, String[] assetTagNames)
+		throws Exception {
+
+		sql = StringUtil.replace(
+			sql, "[$JOIN_BY$]",
+			getJoinBy(sharedToJSONArray, assetTagNames));
+
+		sql = replacePrivateAssetEntrySet(sql, privateAssetEntrySet);
+		sql = replaceTimeComparator(sql, greaterThan);
+
+		List<String> whereClauses = new ArrayList<String>();
+
+		whereClauses.add(getAssetTagNames(classNameId, classPK, assetTagNames));
+		whereClauses.add(getCreator(classNameId, classPK, creatorJSONArray));
+		whereClauses.add(
+			getIncludeAssetEntrySetIds(
+				classNameId, classPK, includeAssetEntrySetIds));
+		whereClauses.add(getSharedTo(classNameId, classPK, sharedToJSONArray));
+
+		whereClauses.removeAll(_emptyList);
+
+		sql = StringUtil.replace(
+			sql, "[$WHERE$]",
+			ListUtil.toString(whereClauses, StringPool.BLANK, " OR "));
+
+		return StringUtil.replace(
+			sql, "[$EXCLUDE_ASSET_ENTRY_SET_IDS$]",
+			getExcludeAssetEntrySetIds(excludeAssetEntrySetIds));
+	}
+
+	private static final String _PRIVATE_ASSET_ENTRY_SET_SQL =
+		"(AssetEntrySet.privateAssetEntrySet = 1) AND";
 
 	private static final List<String> _emptyList = Arrays.asList(
 		StringPool.BLANK);
