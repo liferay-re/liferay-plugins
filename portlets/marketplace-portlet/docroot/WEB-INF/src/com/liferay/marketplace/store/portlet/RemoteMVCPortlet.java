@@ -236,15 +236,10 @@ public class RemoteMVCPortlet extends MVCPortlet {
 	protected Method getActionMethod(String actionName)
 		throws NoSuchMethodException {
 
-		try {
-			return super.getActionMethod(actionName);
-		}
-		catch (NoSuchMethodError nsme) {
 			Class<?> clazz = getClass();
 
 			return clazz.getMethod(
 				actionName, ActionRequest.class, ActionResponse.class);
-		}
 	}
 
 	protected String getClientPortletId() {
