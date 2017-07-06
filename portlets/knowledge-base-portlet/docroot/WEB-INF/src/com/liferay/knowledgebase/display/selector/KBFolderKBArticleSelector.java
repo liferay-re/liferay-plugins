@@ -101,9 +101,12 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 			}
 		}
 
-		KBArticle kbArticle =
-			KBArticleLocalServiceUtil.fetchKBArticleByUrlTitle(
+		KBArticle kbArticle = null;
+
+		if (kbFolder != null) {
+			kbArticle = KBArticleLocalServiceUtil.fetchKBArticleByUrlTitle(
 				groupId, kbFolder.getKbFolderId(), urlTitle);
+		}
 
 		if ((kbArticle == null) || !isDescendant(kbArticle, ancestorKBFolder)) {
 			return findClosestMatchingKBArticle(
@@ -221,6 +224,12 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 			return true;
+		}
+
+		if (kbArticle.getKbFolderId() ==
+				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+			return false;
 		}
 
 		KBFolder parentKBFolder = KBFolderLocalServiceUtil.fetchKBFolder(

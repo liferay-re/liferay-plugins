@@ -160,6 +160,9 @@ public class AssetEntrySetLocalServiceImpl
 		assetEntryLocalService.deleteEntry(
 			AssetEntrySet.class.getName(), assetEntrySet.getAssetEntrySetId());
 
+		assetEntrySetLikeLocalService.deleteAssetEntrySetLikes(
+			assetEntrySet.getAssetEntrySetId());
+
 		AssetSharingEntryLocalServiceUtil.deleteAssetSharingEntries(
 			AssetEntrySetConstants.ASSET_ENTRY_SET_CLASS_NAME_ID,
 			assetEntrySet.getAssetEntrySetId());

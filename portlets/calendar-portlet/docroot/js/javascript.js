@@ -34,6 +34,8 @@ AUI.add(
 
 		var ICON_ADD_EVENT_NODE = 'iconAddEventNode';
 
+		var REGEX_UNFILLED_PARAMETER = /\{\s*([^|}]+?)\s*(?:\|([^}]*))?\s*\}/g;
+
 		var STR_BLANK = '';
 
 		var STR_COMMA_SPACE = ', ';
@@ -262,6 +264,14 @@ AUI.add(
 				scheduler.removeEvents(schedulerEvent);
 
 				scheduler.syncEventsUI();
+			},
+
+			fillURLParameters: function(url, data) {
+				var instance = this;
+
+				url = Lang.sub(url, data);
+
+				return url.replace(REGEX_UNFILLED_PARAMETER, '');
 			},
 
 			getCalendarBookingInvitees: function(calendarBookingId, callback) {
@@ -1454,7 +1464,7 @@ AUI.add(
 									modal: true
 								},
 								title: Liferay.Language.get('new-calendar-booking'),
-								uri: Lang.sub(
+								uri: CalendarUtil.fillURLParameters(
 									editCalendarBookingURL,
 									{
 										activeView: activeViewName,
@@ -1892,7 +1902,7 @@ AUI.add(
 								},
 								refreshWindow: window,
 								title: Liferay.Language.get('edit-calendar-booking'),
-								uri: Lang.sub(editCalendarBookingURL, data)
+								uri: CalendarUtil.fillURLParameters(editCalendarBookingURL, data)
 							}
 						);
 
@@ -1941,7 +1951,7 @@ AUI.add(
 								},
 								refreshWindow: window,
 								title: Liferay.Language.get('view-calendar-booking-details'),
-								uri: Lang.sub(viewCalendarBookingURL, data)
+								uri: CalendarUtil.fillURLParameters(viewCalendarBookingURL, data)
 							}
 						);
 
