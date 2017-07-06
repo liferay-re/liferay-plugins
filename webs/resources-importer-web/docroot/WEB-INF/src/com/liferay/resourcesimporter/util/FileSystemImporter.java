@@ -1292,22 +1292,21 @@ public class FileSystemImporter extends BaseImporter {
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(groupId);
 
-		boolean indexReadOnly = SearchEngineUtil.isIndexReadOnly();
-
 		boolean layoutImportInProcess =
 			ExportImportThreadLocal.isLayoutImportInProcess();
 		boolean portletImportInProcess =
 			ExportImportThreadLocal.isPortletImportInProcess();
 
 		try {
-			SearchEngineUtil.setIndexReadOnly(true);
+			// these will disable indexing in current thread
+			ExportImportThreadLocal.setLayoutImportInProcess(true);
+			ExportImportThreadLocal.setPortletImportInProcess(true);
 
 			setUpAssets("assets.json");
 			setUpSettings("settings.json");
 			setUpSitemap("sitemap.json");
 
-			SearchEngineUtil.setIndexReadOnly(false);
-
+			// turn on indexing in current thread to reindex added data
 			ExportImportThreadLocal.setLayoutImportInProcess(false);
 			ExportImportThreadLocal.setPortletImportInProcess(false);
 
@@ -1326,8 +1325,7 @@ public class FileSystemImporter extends BaseImporter {
 			}
 		}
 		finally {
-			SearchEngineUtil.setIndexReadOnly(indexReadOnly);
-
+			// return back indexing state
 			ExportImportThreadLocal.setLayoutImportInProcess(
 				layoutImportInProcess);
 			ExportImportThreadLocal.setPortletImportInProcess(
