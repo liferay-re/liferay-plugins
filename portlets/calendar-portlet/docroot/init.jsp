@@ -147,7 +147,7 @@ String defaultView = portletPreferences.getValue("defaultView", "week");
 String timeFormat = GetterUtil.getString(portletPreferences.getValue("timeFormat", "locale"));
 String timeZoneId = portletPreferences.getValue("timeZoneId", user.getTimeZoneId());
 boolean usePortalTimeZone = GetterUtil.getBoolean(portletPreferences.getValue("usePortalTimeZone", Boolean.TRUE.toString()));
-int weekStartsOn = GetterUtil.getInteger(portletPreferences.getValue("weekStartsOn", null), 0);
+int weekStartsOn = GetterUtil.getInteger(portletPreferences.getValue("weekStartsOn", null), 1);
 
 String sessionClicksDefaultView = SessionClicks.get(request, "calendar-portlet-default-view", defaultView);
 
