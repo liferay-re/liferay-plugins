@@ -78,7 +78,7 @@
 						</h4>
 
 						<p class="welcome-text">
-							Посмотрите наш <a href="http://www.liferay.com/welcome-start?v1.0" target="_blank">Руководство Быстрого Старта</a> для обзора основных особенностей Liferay.
+						    Для первого входа в портал используйте имя пользователя <strong>admin@liferay.com</strong> и пароль <strong>test</strong>, или то, что вы указали при инициализации портала.
 						</p>
 
 						<div class="helper-clearfix">&nbsp;</div>
