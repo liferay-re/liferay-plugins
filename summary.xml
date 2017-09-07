@@ -865,7 +865,7 @@
 		<licenses><![CDATA[LGPL]]></licenses>
 		<liferay-versions><![CDATA[6.2.0+]]></liferay-versions>
 		<releng>
-			<bundle><![CDATA[false]]></bundle>
+			<bundle><![CDATA[true]]></bundle>
 			<category><![CDATA[Productivity]]></category>
 			<demo-url><![CDATA[]]></demo-url>
 			<dependent-apps><![CDATA[]]></dependent-apps>
