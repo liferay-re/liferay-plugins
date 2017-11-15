@@ -20,6 +20,8 @@ package com.liferay.so.util;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassResolverUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -39,6 +41,9 @@ import com.liferay.portal.util.comparator.LayoutPriorityComparator;
 import com.liferay.portlet.expando.model.ExpandoTableConstants;
 import com.liferay.portlet.expando.model.ExpandoValue;
 import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.List;
 
@@ -74,54 +79,58 @@ public class LayoutSetPrototypeUtil {
 	public static void removeLayoutSetPrototype(
 			Group group, boolean privateLayout, String layoutSetPrototypeKey)
 		throws PortalException, SystemException {
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			group.getGroupId(), privateLayout);
-
-		UnicodeProperties settingsProperties =
-			layoutSet.getSettingsProperties();
-
-		settingsProperties.remove("last-merge-time");
-
-		layoutSet.setSettingsProperties(settingsProperties);
-
-		layoutSet.setLayoutSetPrototypeUuid(StringPool.BLANK);
-		layoutSet.setLayoutSetPrototypeLinkEnabled(false);
-
-		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
-
-		LayoutSetLocalServiceUtil.updateLookAndFeel(
-			group.getGroupId(), null, null, StringPool.BLANK, false);
-
-		LayoutSetPrototype layoutSetPrototype = fetchLayoutSetPrototype(
-			group.getCompanyId(), layoutSetPrototypeKey);
-
-		Group layoutSetPrototypeGroup = layoutSetPrototype.getGroup();
-
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			layoutSetPrototypeGroup.getGroupId(), true);
-
-		String[] layoutUuids = new String[layouts.size()];
-
-		for (int i = 0; i < layouts.size(); i++) {
-			Layout layout = layouts.get(i);
-
-			layoutUuids[i] = layout.getUuid();
-		}
-
-		layouts = LayoutLocalServiceUtil.getLayouts(
-			group.getGroupId(), privateLayout);
-
-		layouts = ListUtil.sort(layouts, new LayoutPriorityComparator(false));
-
-		for (Layout layout : layouts) {
-			if (ArrayUtil.contains(
-					layoutUuids, layout.getSourcePrototypeLayoutUuid())) {
-
-				LayoutLocalServiceUtil.deleteLayout(
-					layout.getGroupId(), privateLayout, layout.getLayoutId(),
-					new ServiceContext());
+		try {
+			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				group.getGroupId(), privateLayout);
+	
+			UnicodeProperties settingsProperties =
+				layoutSet.getSettingsProperties();
+	
+			settingsProperties.remove("last-merge-time");
+	
+			layoutSet.setSettingsProperties(settingsProperties);
+	
+			layoutSet.setLayoutSetPrototypeUuid(StringPool.BLANK);
+			layoutSet.setLayoutSetPrototypeLinkEnabled(false);
+	
+			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
+	
+			LayoutSetLocalServiceUtil.updateLookAndFeel(
+				group.getGroupId(), null, null, StringPool.BLANK, false);
+	
+			LayoutSetPrototype layoutSetPrototype = fetchLayoutSetPrototype(
+				group.getCompanyId(), layoutSetPrototypeKey);
+	
+			Group layoutSetPrototypeGroup = layoutSetPrototype.getGroup();
+	
+			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+				layoutSetPrototypeGroup.getGroupId(), true);
+	
+			String[] layoutUuids = new String[layouts.size()];
+	
+			for (int i = 0; i < layouts.size(); i++) {
+				Layout layout = layouts.get(i);
+	
+				layoutUuids[i] = layout.getUuid();
 			}
+	
+			layouts = LayoutLocalServiceUtil.getLayouts(
+				group.getGroupId(), privateLayout);
+	
+			layouts = ListUtil.sort(layouts, new LayoutPriorityComparator(false));
+	
+			for (Layout layout : layouts) {
+				if (ArrayUtil.contains(
+						layoutUuids, layout.getSourcePrototypeLayoutUuid())) {
+	
+					LayoutLocalServiceUtil.deleteLayout(
+						layout.getGroupId(), privateLayout, layout.getLayoutId(),
+						new ServiceContext());
+				}
+			}
+		} catch (Exception ex) {
+			// on any problem we should not prevent initial operation
+			_log.warn("Cannot remove layout set prototype on removing user from SO, ignoring this problem", ex);
 		}
 	}
 
@@ -157,5 +166,8 @@ public class LayoutSetPrototypeUtil {
 			ClassResolverUtil.resolveByPortalClassLoader(
 				"com.liferay.portlet.sites.util.SitesUtil"),
 			"mergeLayoutSetPrototypeLayouts", Group.class, LayoutSet.class);
+	
+	private static Log _log = LogFactoryUtil.getLog(
+			LayoutSetPrototypeUtil.class);
 
 }
