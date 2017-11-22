@@ -297,7 +297,7 @@ public class CalendarUtil {
 
 		jsonObject.put("status", calendarBooking.getStatus());
 		jsonObject.put(
-			"title", calendarBooking.getTitle(themeDisplay.getLocale()));
+			"title", calendarBooking.getTitle(themeDisplay.getLocale(), true));
 
 		return jsonObject;
 	}
