@@ -33,4 +33,8 @@ public interface PortletPropsKeys {
 	public static final String VALIDATION_SCRIPT_ENABLED =
 		"validation.script.enabled";
 
+	public static final String USER_NAME = "username";
+
+	public static final String IP = "ip";
+
 }
