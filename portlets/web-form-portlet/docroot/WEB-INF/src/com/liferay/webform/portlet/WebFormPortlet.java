@@ -47,6 +47,7 @@ import com.liferay.portlet.expando.service.ExpandoRowLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
+import com.liferay.webform.util.PortletPropsKeys;
 import com.liferay.webform.util.PortletPropsValues;
 import com.liferay.webform.util.WebFormUtil;
 
@@ -176,6 +177,10 @@ public class WebFormPortlet extends MVCPortlet {
 			boolean emailSuccess = true;
 			boolean databaseSuccess = true;
 			boolean fileSuccess = true;
+			String username = themeDisplay.isSignedIn() ? themeDisplay.getUser().getScreenName() : "guest";
+			String ip = PortalUtil.getHttpServletRequest(actionRequest).getRemoteAddr();
+			fieldsMap.put(PortletPropsKeys.USER_NAME, username);
+			fieldsMap.put(PortletPropsKeys.IP, ip);
 
 			if (sendAsEmail) {
 				emailSuccess = sendEmail(
@@ -294,6 +299,12 @@ public class WebFormPortlet extends MVCPortlet {
 			sb.append(getCSVFormattedValue(localizedfieldLabel));
 			sb.append(PortletPropsValues.CSV_SEPARATOR);
 		}
+		fieldLabels.add(PortletPropsKeys.USER_NAME);
+		fieldLabels.add(PortletPropsKeys.IP);
+		sb.append(getCSVFormattedValue(PortletPropsKeys.USER_NAME));
+		sb.append(PortletPropsValues.CSV_SEPARATOR);
+		sb.append(getCSVFormattedValue(PortletPropsKeys.IP));
+		sb.append(PortletPropsValues.CSV_SEPARATOR);
 
 		sb.setIndex(sb.index() - 1);
 

@@ -104,6 +104,13 @@ public class WebFormUtil {
 				fieldType = preferences.getValue(
 					"fieldType" + i, StringPool.BLANK);
 			}
+
+            ExpandoColumnLocalServiceUtil.addColumn(
+                    expandoTable.getTableId(), PortletPropsKeys.USER_NAME,
+                    ExpandoColumnConstants.STRING);
+            ExpandoColumnLocalServiceUtil.addColumn(
+                    expandoTable.getTableId(), PortletPropsKeys.IP,
+                    ExpandoColumnConstants.STRING);
 		}
 
 		return expandoTable;
