@@ -2051,30 +2051,6 @@
 		</releng>
 	</plugin>
 	<plugin>
-		<artifact-id><![CDATA[social-coding-portlet]]></artifact-id>
-		<name><![CDATA[Social Coding]]></name>
-		<type><![CDATA[portlet]]></type>
-		<tags><![CDATA[coding, issues, jira, open source, social, subversion, svn]]></tags>
-		<short-description><![CDATA[]]></short-description>
-		<long-description><![CDATA[]]></long-description>
-		<change-log><![CDATA[]]></change-log>
-		<page-url><![CDATA[http://www.liferay.com]]></page-url>
-		<author><![CDATA[Liferay, Inc.]]></author>
-		<licenses><![CDATA[LGPL]]></licenses>
-		<liferay-versions><![CDATA[6.2.0+]]></liferay-versions>
-		<releng>
-			<bundle><![CDATA[true]]></bundle>
-			<category><![CDATA[]]></category>
-			<demo-url><![CDATA[]]></demo-url>
-			<dependent-apps><![CDATA[]]></dependent-apps>
-			<labs><![CDATA[true]]></labs>
-			<marketplace><![CDATA[false]]></marketplace>
-			<public><![CDATA[true]]></public>
-			<support-url><![CDATA[]]></support-url>
-			<supported><![CDATA[false]]></supported>
-		</releng>
-	</plugin>
-	<plugin>
 		<artifact-id><![CDATA[social-networking-portlet]]></artifact-id>
 		<name><![CDATA[Social Networking]]></name>
 		<type><![CDATA[portlet]]></type>
@@ -3577,7 +3553,7 @@
 			<supported><![CDATA[false]]></supported>
 		</releng>
 	</plugin>
-	
+
 	<plugin>
 		<artifact-id><![CDATA[theme-loader-web]]></artifact-id>
 		<name><![CDATA[Theme Loader]]></name>
@@ -3660,7 +3636,7 @@
 		</releng>
 	</plugin>
 
-	
+
 	<!-- LIFERAY-RE Plugins -->
 	<plugin>
 		<artifact-id><![CDATA[vk-autologin-hook]]></artifact-id>
@@ -3711,7 +3687,7 @@
 			<supported><![CDATA[false]]></supported>
 		</releng>
 	</plugin>
-	
+
 	<plugin>
 		<artifact-id><![CDATA[social-bookmarks-re-hook]]></artifact-id>
 		<name><![CDATA[Social Bookmarks]]></name>
@@ -3736,7 +3712,7 @@
 			<supported><![CDATA[false]]></supported>
 		</releng>
 	</plugin>
-	
+
 	<author>${Bundle-Vendor}</author>
 	<author>Liferay, Inc.</author>
 	<author>SpringSource, Inc.</author>
