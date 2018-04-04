@@ -450,6 +450,7 @@ AUI.add(
 
 				var url = Liferay.PortletURL.createResourceURL();
 
+				url.setDoAsUserId(Liferay.ThemeDisplay.getDoAsUserIdEncoded());
 				url.setPortletId('1_WAR_calendarportlet');
 				url.setResourceId(params.resourceId);
 
