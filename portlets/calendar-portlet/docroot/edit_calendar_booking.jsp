@@ -423,6 +423,7 @@ for (long otherCalendarId : otherCalendarIds) {
 	</c:if>
 </aui:script>
 
+<%--LRE-276
 <aui:script use="liferay-calendar-interval-selector">
 	new Liferay.IntervalSelector(
 		{
@@ -435,7 +436,7 @@ for (long otherCalendarId : otherCalendarIds) {
 			submitButtonId: 'submit'
 		}
 	);
-</aui:script>
+</aui:script>--%>
 
 <aui:script use="json,liferay-calendar-date-picker-util,liferay-calendar-list,liferay-calendar-recurrence-util,liferay-calendar-reminders,liferay-calendar-simple-menu">
 	var defaultCalendarId = <%= calendarId %>;
