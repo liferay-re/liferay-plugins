@@ -5,8 +5,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd"
 >
-	<name>Scripted Single Approver</name>
-	<description>A single approver can approve a workflow content.</description>
+	<name>Один ответственный (Скрипт)</name>
+	<description>Бизнесс процесс с одним ответственным для утверждения. Может использоваться для утверждения веб-контента.</description>
 	<version>1</version>
 	<state>
 		<name>created</name>
@@ -30,7 +30,7 @@
 		<actions>
 			<notification>
 				<name>Creator Modification Notification</name>
-				<template>Your submission was rejected by ${userName}, please modify and resubmit.</template>
+				<template>Ваша зявка была откланена пользователем ${userName}, пожалуйста обновите её и отправьте повторно на утверждение.</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<notification-type>user-notification</notification-type>
@@ -57,7 +57,7 @@
 			<notification>
 				<name>Review Completion Notification</name>
 				<template>
-					Your submission was reviewed and the reviewer has applied the following ${taskComments}.</template>
+					Ваша заявка была рассмотрена и ответственный добавил следующие комментарии: ${taskComments}.</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<recipients>
