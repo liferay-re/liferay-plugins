@@ -35,6 +35,10 @@
 		<system>true</system>
 	</portlet>
 	<portlet>
+		<portlet-name>7</portlet-name>
+		<system>true</system>
+	</portlet>
+	<portlet>
 		<portlet-name>8</portlet-name>
 		<icon>/user_bar/icon.png</icon>
 		<use-default-template>false</use-default-template>
